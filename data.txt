@@ -1,0 +1,13 @@
+master data
+    1. inventaris
+    2. status
+    3. jenis barang
+    4. departement
+management user
+    1. userroles
+    2. role
+    3. permission
+permintaan
+    1. daftar permintaan
+Laporan
+    1. Stock Barang

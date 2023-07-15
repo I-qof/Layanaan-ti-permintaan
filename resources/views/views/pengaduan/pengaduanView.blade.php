@@ -34,7 +34,7 @@
                             <ul class="navbar-nav ms-auto me-lg-5">
                                 <li class="nav-item"><a class="nav-link " href="{{ url('/') }}">Home</a></li>
                                 <li class="nav-item"><a class="nav-link active"
-                                        href="{{ url('/view/aduan') }}">Aduan</a></li>
+                                        href="{{ url('/view/permintaan') }}">Permintaan</a></li>
                                 {{-- <li class="nav-item"><a class="nav-link "
                                         href="{{ url('/view/permintaan') }}">Permintaan</a></li> --}}
 
@@ -52,8 +52,8 @@
                         <div class="container px-5">
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-10 text-center mb-4" data-aos="fade">
-                                    <h1 class="page-header-ui-title">Selamat Datang Dilayanaan Pengaduan</h1>
-                                    <p class="page-header-ui-text">Silahkan Lakukan tracking pengaduan anda</p>
+                                    <h1 class="page-header-ui-title">Layanaan Permintaan Komputer</h1>
+                                    <p class="page-header-ui-text">Silahkan Lakukan tracking permintaan anda</p>
                                     <div class="row justify-content-center">
                                         <div class="input-group w-75 ">
 
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <a class="btn btn-outline-green fw-500 me-2 mt-4" id="tambah"
-                                        href="{{ URL::to('/aduan/add') }}">Tambah Aduan</a>
+                                        href="{{ URL::to('/aduan/add') }}">Tambah Permintaan</a>
                                 </div>
                             </div>
                         </div>

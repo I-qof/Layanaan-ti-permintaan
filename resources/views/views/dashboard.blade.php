@@ -10,7 +10,7 @@
                 <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Aduan</h4>
+                            <h4 class="card-title">Permintaan</h4>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted">Jumlah Keseluruhan</p>
                                 <p class="text-muted">Total: {{ $aduan }}</p>
@@ -25,7 +25,7 @@
                 <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Deskripsi Aduan</h4>
+                            <h4 class="card-title">Deskripsi Permintaan</h4>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted">Jumlah Keseluruhan</p>
                                 <p class="text-muted">Total: {{ $descAduan }}</p>

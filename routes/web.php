@@ -45,7 +45,7 @@ Route::get('/aduan/print/{no_aduan}',[AduanController::class,'print']);
 
 Route::post('/aduan/store', [AduanController::class, 'store']);
 Route::get('/view/aduan', [AduanController::class, 'viewAduan'])->name('viewAduan');
-Route::get('/view/permintaan', [PermintaanController::class, 'viewPermintaan']);
+Route::get('/view/permintaan', [PermintaanController::class, 'viewPermintaan'])->name('viewPermintaan');
 Route::get('/aduan/add', [AduanController::class, 'add'])->name('aduanAdd');
 Route::post('/desc-aduan/store', [DescAduanController::class, 'store']);
 Route::get('/desc-aduan/get/{no_aduan}', [DescAduanController::class, 'get']);

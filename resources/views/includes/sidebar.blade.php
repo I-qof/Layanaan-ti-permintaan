@@ -10,35 +10,7 @@
            </li>
 
            <li class="nav-item nav-category">Layanaan</li>
-           @can('menu-aduan', Aduan::class)
-           <li class="nav-item ">
-               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                   aria-controls="ui-basic">
-                   <i class="menu-icon mdi mdi-floor-plan"></i>
-                   <span class="menu-title">Pengaduan</span>
-                   <i class="menu-arrow"></i>
-               </a>
-               <div class="collapse" id="ui-basic">
-                   <ul class="nav flex-column sub-menu">
-                       <li class="nav-item">
-                           <a class="nav-link"
-                               href="
-                               {{ route('aduan') }}
-                               ">Request</a>
-                       </li>
-                       {{-- <li class="nav-item"> <a class="nav-link"
-                               href="
-                               {{ URL::to('/aduan/report') }}
-                               ">Laporan</a>
-                       </li> --}}
-
-                   </ul>
-               </div>
-           </li> 
-           @endcan
-
-
-           {{-- <li class="nav-item">
+           <li class="nav-item">
                <a class="nav-link" data-bs-toggle="collapse" href="#ui-advanced" aria-expanded="false"
                    aria-controls="ui-advanced">
                    <i class="menu-icon mdi mdi-arrow-down-drop-circle-outline"></i>
@@ -53,7 +25,7 @@
                        </li>
                    </ul>
                </div>
-           </li> --}}
+           </li>
            @can('menu-user', User::class)
                <li class="nav-item nav-category">Master Data</li>
                <li class="nav-item">
@@ -104,9 +76,9 @@
                                        href="{{ URL::to('/inventaris/view') }}">Inventaris</a>
                                </li>
                            @endcan
-                           @can('menu-sperpat', Sperpat::class)
-                               <li class="nav-item {{ Request::is(['sperpat/*']) ? 'active' : '' }}"> <a class="nav-link"
-                                       href="{{ URL::to('/sperpat/view') }}">sperpat</a>
+                           @can('menu-departement', departement::class)
+                               <li class="nav-item {{ Request::is(['departement/*']) ? 'active' : '' }}"> <a class="nav-link"
+                                       href="{{ URL::to('/departement/view') }}">departement</a>
                                </li>
                            @endcan
                        </ul>

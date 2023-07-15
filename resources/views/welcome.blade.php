@@ -26,7 +26,7 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto me-lg-5">
                                     <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ url('/view/aduan') }}">Aduan</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url('/view/permintaan') }}">Permintaan</a></li>
                                     {{-- <li class="nav-item"><a class="nav-link" href="{{ url('/view/permintaan') }}">Permintaan</a></li> --}}
                                     
                                     
@@ -46,7 +46,7 @@
                                     <div class="col-xl-8 col-lg-10 text-center mb-4" data-aos="fade">
                                         <h1 class="page-header-ui-title">Layanan Aduan IT</h1>
                                         <p class="page-header-ui-text">Dapatkan bantuan dan dukungan teknis untuk masalah IT Anda dengan layanan aduan IT kami. Tim ahli kami siap membantu Anda dalam mengatasi permasalahan komputer, perangkat lunak, jaringan, dan lainnya. Kami menyediakan solusi yang mudah digunakan dan efektif untuk memastikan kelancaran operasional sistem Anda.</p>
-                                        <a class="btn btn-primary fw-500 me-2" href="{{ route('viewAduan') }}">Mulai</a>
+                                        <a class="btn btn-primary fw-500 me-2" href="{{ route('viewPermintaan') }}">Mulai</a>
                                         {{-- <a class="btn btn-link fw-500" href="#!">Pelajari Lebih Lanjut</a> --}}
                                     </div>
                                 </div>
