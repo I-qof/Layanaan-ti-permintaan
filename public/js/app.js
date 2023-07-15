@@ -6,7 +6,7 @@ $.ajaxSetup({
 
 $(".btnPermintaan").on("click", function () {
     // alert("test")
-    window.location.replace(APP_URL + "/permintaan/view");
+    window.location.replace(APP_URL + "/permintaan");
 });
 // $("#linkAduan").on("click", function () {
 //     // alert("test")

@@ -5,7 +5,7 @@ var table = $("#tabel-main").DataTable({
     serverSide: true,
     autoWidth: false,
     ajax: {
-        url: APP_URL + "/sperpat",
+        url: APP_URL + "/sperpat/get",
         method: "GET",
     },
     columns: [

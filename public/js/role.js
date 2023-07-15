@@ -5,7 +5,7 @@ var table = $("#tabel-main").DataTable({
     serverSide: true,
     autoWidth: false,
     ajax: {
-        url: APP_URL + "/role",
+        url: APP_URL + "/role/get",
         method: "GET",
     },
     columns: [

@@ -1,5 +1,5 @@
 // $("#roles").select2();
-$.getJSON(APP_URL + "/role", function (data) {
+$.getJSON(APP_URL + "/role/get  ", function (data) {
     data.data.forEach((item, i) => {
         $("#roles").append(
             $("<option>", {
@@ -17,7 +17,7 @@ var table = $("#tabel-main").DataTable({
     serverSide: true,
     autoWidth: false,
     ajax: {
-        url: APP_URL + "/userroles",
+        url: APP_URL + "/userroles/get",
         method: "GET",
     },
     columns: [
