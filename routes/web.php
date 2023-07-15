@@ -3,6 +3,7 @@
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\BarangPakaiAduanController;
 use App\Http\Controllers\BarangPakaiPermintaanController;
+use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DescAduanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventarisController;
@@ -46,6 +47,7 @@ Route::get('/aduan/print/{no_aduan}',[AduanController::class,'print']);
 Route::post('/aduan/store', [AduanController::class, 'store']);
 Route::get('/view/aduan', [AduanController::class, 'viewAduan'])->name('viewAduan');
 Route::get('/view/permintaan', [PermintaanController::class, 'viewPermintaan'])->name('viewPermintaan');
+Route::get('/permintaan/add', [PermintaanController::class, 'add'])->name('permintaanAdd');
 Route::get('/aduan/add', [AduanController::class, 'add'])->name('aduanAdd');
 Route::post('/desc-aduan/store', [DescAduanController::class, 'store']);
 Route::get('/desc-aduan/get/{no_aduan}', [DescAduanController::class, 'get']);
@@ -56,11 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
     // halaman view
     Route::get('/home', [HomeController::class, 'index']);
     Route::get('/aduan/view', [AduanController::class, 'view'])->name('aduan');
-    Route::get('/permintaan/view', [PermintaanController::class, 'view']);
+    Route::get('/permintaan/view', [PermintaanController::class, 'view'])->name('permintaan');
     Route::get('/aduan/report', [AduanController::class, 'view']);
     Route::get('/permintaan/report', [PermintaanController::class, 'view']);
 
     Route::get('/status/view', [StatusController::class, 'view'])->name('status');
+    Route::get('/departement', [DepartementController::class, 'view'])->name('departement');
     Route::get('/sperpat/view', [SperpatController::class, 'view'])->name('sperpat');
     Route::get('/inventaris/view', [InventarisController::class, 'view'])->name('inventaris');
     Route::get('/jenis-barang/view', [JenisBarangController::class, 'view'])->name('jenis-barang');
@@ -139,6 +142,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [InventarisController::class, 'store']);
         Route::post('/update/{id}', [InventarisController::class, 'update']);
         Route::get('/delete/{id}', [InventarisController::class, 'destroy']);
+    });
+    Route::group(['prefix' => 'departement'], function () {
+        Route::get('/get', [DepartementController::class, 'index']);
+        Route::get('/getById/{id}', [DepartementController::class, 'getById']);
+        Route::post('/store', [DepartementController::class, 'store']);
+        Route::post('/update/{id}', [DepartementController::class, 'update']);
+        Route::get('/delete/{id}', [DepartementController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'jenis-barang'], function () {

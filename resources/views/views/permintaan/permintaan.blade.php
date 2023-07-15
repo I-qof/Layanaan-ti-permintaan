@@ -13,7 +13,7 @@
                         <table id="tabel-main" class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th><a href="{{ url('/permintaan/add') }}" class="btn btn-success">Tambah Data</a></th>
                                     <th>No Aduan</th>
                                     <th>Nama User</th>
                                     <th>Tgl. Masuk</th>

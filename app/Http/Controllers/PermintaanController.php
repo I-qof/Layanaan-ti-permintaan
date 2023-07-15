@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventaris;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class PermintaanController extends Controller
@@ -21,6 +23,15 @@ class PermintaanController extends Controller
 
    public function viewPermintaan(){
       return view('views.permintaan.permintaanView');
+   }
+   public function add()
+   {
+      $inventaris = Inventaris::where('deleted', 1)->get();
+      $random = Str::random(40);
+      return view('views.permintaan.permintaaanAdd', [
+         'no_aduan' => $random,
+         'inventaris' => $inventaris
+      ]);
    }
 
    public function store(Request $request)

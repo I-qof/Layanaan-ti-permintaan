@@ -4,6 +4,10 @@ $.ajaxSetup({
     },
 });
 
+$(".btnPermintaan").on("click", function () {
+    // alert("test")
+    window.location.replace(APP_URL + "/permintaan/view");
+});
 // $("#linkAduan").on("click", function () {
 //     // alert("test")
 //     window.location.replace(APP_URL + "/aduan/view");

@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <a class="btn btn-outline-green fw-500 me-2 mt-4" id="tambah"
-                                        href="{{ route('login') }}">Tambah Permintaan</a>
+                                        href="{{ route('permintaan') }}">Tambah Permintaan</a>
                                 </div>
                             </div>
                         </div>
