@@ -14,16 +14,14 @@
                             <section>
                                 <h3>Akun</h3>
                                 <div class="form-group">
-                                    <label>Email address</label>
-                                    <input type="test" id="no_aduan" name="no_aduan" class="form-control"
-                                        value="{{ $no_aduan }}" hidden>
-                                    <input type="email" id="email" name="email" required class="form-control"
-                                        aria-describedby="emailHelp" placeholder="Masukkan Email Anda">
-                                    <small id="emailHelp" class="form-text text-muted">Masukkan Email
-                                        Anda</small>
+                                    <label>Nama Pengguna</label>
+                                    <input type="text" id="nama" name="nama" class="form-control" placeholder=""
+                                        disabled value="{{ Auth::user()->name }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor HP</label>
+                                    <input type="test" id="no_aduan" name="no_aduan" class="form-control"
+                                        value="{{ $no_aduan }}" hidden>
                                     <input type="text" id="no_hp" name="no_hp" class="form-control" required
                                         placeholder="Masukkan nomor handphone anda">
                                 </div>
@@ -32,20 +30,21 @@
                                     <input type="text" id="lokasi" name="lokasi" required class="form-control"
                                         placeholder="Masukkan lokasi anda ">
                                 </div>
+
                             </section>
-                            <h3>Keluhan</h3>
+                            <h3>Permintaan</h3>
                             <section>
-                                <h3>keluhan</h3>
+                                <h3>Permintaan</h3>
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label>Email Atasan</label>
                                         <input type="email" id="email_atasan" name="email_atasan" required
                                             class="form-control" placeholder="Masukkan email atasan anda ">
                                     </div>
-                                    <label>Deskripsi Keluhan</label>
+                                    <label>Alasan Permintaan</label>
 
-                                    <textarea type="text" class="form-control w-100" id="keluhan" required name="keluhan" style="width: 100%"
-                                        aria-describedby="text" placeholder="Masukkan deskripsi keluhan anda"></textarea>
+                                    <textarea type="text" class="form-control w-100" id="alasan_permintaan" required name="alasan_permintaan"
+                                        style="width: 100%" aria-describedby="text" placeholder="Masukkan alasan permintaan anda"></textarea>
                                 </div>
 
                             </section>
@@ -76,7 +75,7 @@
                                     </div>
                             </section>
 
-                            <h3>Selesai</h3>
+                            {{-- <h3>Selesai</h3>
                             <section>
                                 <h3>Selesai</h3>
                                 <div class="form-check">
@@ -85,10 +84,50 @@
                                         Saya setuju dengan Syarat dan Ketentuan.
                                     </label>
                                 </div>
-                            </section>
+                            </section> --}}
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddLabel">Tambah data Kerusakan</h5>
+                    <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formData" autocomplete="off">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jenis Barang</label>
+                            <input type="test" id="no_aduan" name="no_aduan" class="form-control"
+                                value="{{ $no_aduan }}" hidden required>
+                            <select name="id_jenis_barang" id="id_jenis_barang" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Jenis Barang</option>
+                                @foreach ($jenis as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_jenis }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">deskripsi</label>
+                            <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" required
+                                placeholder="Harap Isikan Spesifikasi Permintaaan deskripsi" style="width: 100%;resize: vertical;" rows="4"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-light cancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -9,6 +9,10 @@ class DescPermintaan extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
-    protected $table = 'desc_permintaaan';
+    protected $table = 'desc_permintaan';
     protected $guarded = [''];
+
+    public function permintaan(){
+        return $this->belongsTo(Permintaan::class);
+    }
 }

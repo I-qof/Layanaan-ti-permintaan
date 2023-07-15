@@ -9,94 +9,91 @@ use Yajra\DataTables\DataTables;
 
 class DescPermintaanController extends Controller
 {
-    public function index()
+   public function index()
    {
-      $data = DB::connection('mysql')->select("SELECT * FROM aduan where deleted = 1");
+      $data = DescPermintaan::select('desc_permintaan.*','jenis_barang.nama_jenis')
+      ->leftJoin('jenis_barang', 'desc_permintaan.id_jenis_barang', '=', 'jenis_barang.id')
+      ->where('desc_permintaan.deleted', 1)->get();
       return DataTables::of($data)->make(true);
    }
 
-   public function view(){
-      return view('views.pengaduan.pengaduan');
+   public function get($no_aduan)
+   {
+      $data = DescPermintaan::select('desc_permintaan.*', 'status.nama_status', 'status.color', 'users.name as name')
+         ->leftJoin('status', 'desc_permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'desc_permintaan.id_teknisi', '=', 'users.id')
+         ->where('desc_permintaan.deleted', 1)
+         ->where('desc_permintaan.no_aduan', $no_aduan)
+         ->orderByDesc('desc_permintaan.id') // Mengurutkan berdasarkan id secara descending
+         ->get();
+      return DataTables::of($data)->make(true);
+   }
+
+   public function view()
+   {
+      return view('views.permintaan.permintaan');
    }
 
    public function store(Request $request)
    {
       $this->validate($request, [
-         'id_user' => 'required',
-         'keluhan' => 'required',
+         'id_jenis_barang' => 'required',
+         'deskripsi' => 'required',
          'no_aduan' => 'required',
-         'no_hp' => 'required',
-         'lokasi' => 'required',
-         'email_atasan' => 'required',
-         'tgl_masuk' => 'required',
-         'tgl_keluar' => 'required',
-         'id_status' => 'required',
-         'nama_pengambil' => 'required',
       ]);
 
       $input = [
-         'id_user' => $request->id_user,
-         'keluhan' => $request->keluhan,
+         'id_jenis_barang' => $request->id_jenis_barang,
+         'deskripsi' => $request->deskripsi,
          'no_aduan' => $request->no_aduan,
-         'no_hp' => $request->no_hp,
-         'lokasi' => $request->lokasi,
-         'email_atasan' => $request->email_atasan,
-         'tgl_masuk' => $request->tgl_masuk,
-         'tgl_keluar' => $request->tgl_keluar,
-         'id_status' => $request->id_status,
-         'nama_pengambil' => $request->nama_pengambil,
-
       ];
 
-      $data = Aduan::create($input);
+      $data = DescPermintaan::create($input);
       return response()->json($data);
    }
 
 
    public function getById($id)
    {
-      $data = DB::connection('mysql')->select("SELECT * FROM aduan where deleted =1 and id = $id");
+      $data = DescPermintaan::where('id', $id)->first();
       return response()->json(['data' => $data]);
    }
 
    public function destroy($id)
    {
-      $data = Aduan::where('id', $id)->update([
+      $data = DescPermintaan::where('id', $id)->update([
          'deleted' => 0
       ]);
       return response()->json($data);
    }
 
-   public function update($id,Request $request){
-      $this->validate($request, [
-         'id_user' => 'required',
-         'keluhan' => 'required',
-         'no_aduan' => 'required',
-         'no_hp' => 'required',
-         'lokasi' => 'required',
-         'email_atasan' => 'required',
-         'tgl_masuk' => 'required',
-         'tgl_keluar' => 'required',
-         'id_status' => 'required',
-         'nama_pengambil' => 'required',
-      ]);
+   public function update($id, Request $request)
+   {
+      if ($request->id_jenis_barang) {
+         $input = [
+            'id_jenis_barang' => $request->id_jenis_barang,
+            'deskripsi' => $request->deskripsi,
+            'no_aduan' => $request->no_aduan,
+         ];
+      } else {
+         $input = [
+            'id_inventaris' => $request->id_inventaris,
+            'diagnosa' => $request->diagnosa,
+            'deskripsi' => $request->deskripsi,
+            'id_status_deskripsi' => $request->id_status_deskripsi,
+            'id_status_qc' => $request->id_status_qc,
+            'id_status_penyelesaian' => $request->id_status_penyelesaian,
+            'id_teknisi' => $request->id_teknisi,
+            'stock_status' => $request->stock_status,
+            'pembelian_status' => $request->pembelian_status,
+            'id_jenis_barang' => $request->id_jenis_barang,
+            'id_status' => $request->id_status,
+            'tindakan' => $request->tindakan,
+         ];
+      }
 
-      $input = [
-         'id_user' => $request->id_user,
-         'keluhan' => $request->keluhan,
-         'no_aduan' => $request->no_aduan,
-         'no_hp' => $request->no_hp,
-         'lokasi' => $request->lokasi,
-         'email_atasan' => $request->email_atasan,
-         'tgl_masuk' => $request->tgl_masuk,
-         'tgl_keluar' => $request->tgl_keluar,
-         'id_status' => $request->id_status,
-         'nama_pengambil' => $request->nama_pengambil,
-
-      ];
-
-      $data = Aduan::where('id',$id)->update($input);
+     
+      $data = DescPermintaan::where('id', $id)->update($input);
       return response()->json($data);
-
    }
 }

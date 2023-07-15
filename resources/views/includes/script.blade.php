@@ -29,7 +29,6 @@
 
 <script src="{{ URL::asset('assets/vendors/jquery-steps/jquery.steps.min.js') }}"></script>
 <script src="{{ URL::asset('assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/wizard.js') }}"></script>
 
 <script src="{{ URL::asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
 <script src="{{ URL::asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>

@@ -22,7 +22,7 @@ var table = $("#tabel-main").DataTable({
             className: "text-center",
         },
         {   
-            data: "id_user",
+            data: "name",
             className: "text-center",
         },
         {   
@@ -38,7 +38,7 @@ var table = $("#tabel-main").DataTable({
             className: "text-center",
         },
         {   
-            data: "id_status",
+            data: "nama_status",
             className: "text-center",
         },
         {   
@@ -58,4 +58,61 @@ var table = $("#tabel-main").DataTable({
             className: "text-center",
         },
     ],
+});
+
+$("#tabel-main").on("click", ".editData", function () {
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+  
+    window.location.href = APP_URL + "/permintaan/updateView/" + id;
+});
+$("#tabel-main").on("click", ".hapusData", function () {
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    swal({
+        title: "Hapus Data?",
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3f51b5",
+        cancelButtonColor: "#ff4081",
+        confirmButtonText: "Great ",
+        buttons: {
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        },
+    }).then(function (result) {
+        if (result) {
+            // alert("hy")
+            $.ajax({
+                type: "GET",
+                url: APP_URL + "/permintaan/delete/" + data.id,
+                success: function (response) {
+                    $.toast({
+                        heading: "Info",
+                        text: "Data berhasil dihapus!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                    table.draw();
+                },
+                error: function (data) {
+                    toastr["error"]("Masih terdapat Error!", "Error");
+                },
+            });
+        }
+    });
 });

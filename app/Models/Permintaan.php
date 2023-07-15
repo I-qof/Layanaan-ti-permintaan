@@ -11,4 +11,11 @@ class Permintaan extends Model
     protected $primaryKey = 'id';
     protected $table = 'permintaan';
     protected $guarded = [''];
+
+    public function descPermintaan(){
+        return $this->hasMany(DescPermintaan::class);
+    }
+    public function user(){
+        return $this->hasMany(User::class);
+    }
 }
