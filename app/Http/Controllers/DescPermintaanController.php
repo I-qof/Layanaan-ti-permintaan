@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DescPermintaan;
+use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -11,15 +12,16 @@ class DescPermintaanController extends Controller
 {
    public function index()
    {
-      $data = DescPermintaan::select('desc_permintaan.*','jenis_barang.nama_jenis')
-      ->leftJoin('jenis_barang', 'desc_permintaan.id_jenis_barang', '=', 'jenis_barang.id')
-      ->where('desc_permintaan.deleted', 1)->get();
+      $data = DescPermintaan::select('desc_permintaan.*', 'jenis_barang.nama_jenis')
+         ->leftJoin('jenis_barang', 'desc_permintaan.id_jenis_barang', '=', 'jenis_barang.id')
+         ->where('desc_permintaan.deleted', 1)->get();
       return DataTables::of($data)->make(true);
    }
 
    public function get($no_aduan)
    {
-      $data = DescPermintaan::select('desc_permintaan.*', 'status.nama_status', 'status.color', 'users.name as name')
+      $data = DescPermintaan::select('desc_permintaan.*', 'status.nama_status', 'status.color', 'users.name as name', 'jenis_barang.nama_jenis')
+         ->leftJoin('jenis_barang', 'desc_permintaan.id_jenis_barang', '=', 'jenis_barang.id')
          ->leftJoin('status', 'desc_permintaan.id_status', '=', 'status.id')
          ->leftJoin('users', 'desc_permintaan.id_teknisi', '=', 'users.id')
          ->where('desc_permintaan.deleted', 1)
@@ -92,8 +94,57 @@ class DescPermintaanController extends Controller
          ];
       }
 
-     
+
       $data = DescPermintaan::where('id', $id)->update($input);
       return response()->json($data);
+   }
+
+   public function tersedia($no_aduan)
+   {
+      try {
+         $permintaan = Permintaan::select('permintaan.*', 'users.name as name','users.email as email', 'status.nama_status')
+            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+            ->where('permintaan.deleted', 1)
+            ->where('permintaan.no_aduan', $no_aduan)->first();
+         $data = DescPermintaan::where('no_aduan', $no_aduan)->first();
+         $data->update(['stock_status' => 2]);
+         $this->sendMailApprove($permintaan->email, $permintaan);
+         $this->sendMailApprove($permintaan->email_atasan, $permintaan);
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
+
+   public function kosong($no_aduan)
+   {
+      try {
+         $permintaan = Permintaan::select('permintaan.*', 'users.name as name','users.email as email', 'status.nama_status')
+            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+            ->where('permintaan.deleted', 1)
+            ->where('permintaan.no_aduan', $no_aduan)->first();
+         $data = DescPermintaan::where('no_aduan', $no_aduan)->first();
+         $data->update(['stock_status' => 2]);
+         $this->sendMailApprove($permintaan->email, $permintaan);
+         $this->sendMailApprove($permintaan->email_atasan, $permintaan);
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
+
+   public function sendMailApprove($email, $data)
+   {
+      // dd($data);
+      $mailData = [
+         'alasan_permintaan' => $data->alasan_permintaan,
+         'no_aduan' => $data->no_aduan,
+         'no_hp' => $data->no_hp,
+         'lokasi' => $data->lokasi,
+         // 'email' => $data->email,
+         'email_atasan' => $data->email_atasan,
+
+      ];
+      Mail::to($email)->send(new ApprovePermintaan($mailData));
    }
 }

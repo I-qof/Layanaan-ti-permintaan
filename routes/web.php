@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'userroles'], function () {
         Route::get('/get', [UserRoleController::class, 'index']);
         Route::get('/{id}', [UserRoleController::class, 'getById']);
-        Route::post('/', [UserRoleController::class, 'store']);
+        Route::post('/store', [UserRoleController::class, 'store']);
         Route::patch('/update', [UserRoleController::class, 'update']);
     });
     Route::group(['prefix' => 'role'], function () {
@@ -116,10 +116,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'permintaan'], function () {
         Route::get('/get', [PermintaanController::class, 'index']);
+        Route::get('/approve/{no_aduan}', [PermintaanController::class, 'approve']);
         Route::get('/getById/{id}', [PermintaanController::class, 'getById']);
         Route::post('/store', [PermintaanController::class, 'store']);
         Route::post('/update/{id}', [PermintaanController::class, 'update']);
         Route::get('/delete/{id}', [PermintaanController::class, 'destroy']);
+        Route::get('/updateView/{id}', [PermintaanController::class, 'updateView']);
+
     });
 
     Route::group(['prefix' => 'desc-permintaan'], function () {

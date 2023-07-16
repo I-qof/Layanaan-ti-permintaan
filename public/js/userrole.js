@@ -1,5 +1,6 @@
 // $("#roles").select2();
-$.getJSON(APP_URL + "/role/get  ", function (data) {
+let id;
+$.getJSON(APP_URL + "/role/get", function (data) {
     data.data.forEach((item, i) => {
         $("#roles").append(
             $("<option>", {
@@ -69,6 +70,7 @@ $(".close").on("click", function () {
 });
 
 $("#openModal").on("click", function () {
+    $("#id").val(0);
     $("#name").val("");
     $("#email").val("");
     $("#selLevel").val("1").trigger("change");
@@ -77,46 +79,88 @@ $("#openModal").on("click", function () {
 
 $("#formData").on("submit", function (event) {
     event.preventDefault();
-    $.ajax({
-        type: "PATCH",
-        url: APP_URL + "/userroles/update",
-        data: $("#formData").serialize(),
+    let idku = $("#id").val();
+    if (idku == 0) {
+        $.ajax({
+            type: "POST",
+            url: APP_URL + "/userroles/store",
+            data: $("#formData").serialize(),
 
-        success: function (response) {
-            table.draw(false);
+            success: function (response) {
+                table.draw(false);
 
-            $("#modalAdd").modal("hide");
-            $.toast({
-                heading: "Info",
-                text: "Data berhasil diubah!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-        },
-        error: function (data) {
-
-            $.toast({
-                heading: "Info",
-                text: "Error!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-            var msg = data.responseJSON;
-            var message = "";
-
-            $.each(msg, function (key, valueObj) {
-                valueObj.forEach((item, i) => {
-                    message += ". " + item + "<br>";
+                $("#modalAdd").modal("hide");
+                $.toast({
+                    heading: "Info",
+                    text: "Data berhasil diubah!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
                 });
-            });
+            },
+            error: function (data) {
+                $.toast({
+                    heading: "Info",
+                    text: "Error!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
+                });
+                var msg = data.responseJSON;
+                var message = "";
 
-            toastr["error"](message, "Error");
-        },
-    });
+                $.each(msg, function (key, valueObj) {
+                    valueObj.forEach((item, i) => {
+                        message += ". " + item + "<br>";
+                    });
+                });
+
+                toastr["error"](message, "Error");
+            },
+        });
+    } else {
+        $.ajax({
+            type: "PATCH",
+            url: APP_URL + "/userroles/update",
+            data: $("#formData").serialize(),
+
+            success: function (response) {
+                table.draw(false);
+
+                $("#modalAdd").modal("hide");
+                $.toast({
+                    heading: "Info",
+                    text: "Data berhasil diubah!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
+                });
+            },
+            error: function (data) {
+                $.toast({
+                    heading: "Info",
+                    text: "Error!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
+                });
+                var msg = data.responseJSON;
+                var message = "";
+
+                $.each(msg, function (key, valueObj) {
+                    valueObj.forEach((item, i) => {
+                        message += ". " + item + "<br>";
+                    });
+                });
+
+                toastr["error"](message, "Error");
+            },
+        });
+    }
 });
 
 $("#tabel-main").on("click", ".editData", function () {
@@ -129,41 +173,39 @@ $("#tabel-main").on("click", ".editData", function () {
     $("#modalAdd").modal("show");
 });
 
-
-
 $("#tabel-main").on("click", ".hapusData", function () {
     data = table.rows($(this).closest("tr").index()).data()[0];
     swal({
-        title: 'Hapus Data?',
+        title: "Hapus Data?",
         text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3f51b5',
-        cancelButtonColor: '#ff4081',
-        confirmButtonText: 'Great ',
+        confirmButtonColor: "#3f51b5",
+        cancelButtonColor: "#ff4081",
+        confirmButtonText: "Great ",
         buttons: {
-          cancel: {
-            text: "Cancel",
-            value: null,
-            visible: true,
-            className: "btn btn-danger",
-            closeModal: true,
-          },
-          confirm: {
-            text: "OK",
-            value: true,
-            visible: true,
-            className: "btn btn-primary",
-            closeModal: true
-          }
-        }
-      }).then(function(result){
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        },
+    }).then(function (result) {
         if (result) {
             $.ajax({
                 type: "DELETE",
                 url: APP_URL + "/user",
                 data: "id=" + data.id,
-               
+
                 success: function (response) {
                     $.toast({
                         heading: "Info",

@@ -2,32 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Aduan;
+use App\Mail\ApprovePermintaan;
+use App\Mail\Permintaan as AppPermintaan;
+use App\Models\DescPermintaan;
 use App\Models\Inventaris;
 use App\Models\Jenis_barang;
 use App\Models\Permintaan;
+use App\Models\Status;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class PermintaanController extends Controller
 {
-    public function index()
+   public function index()
    {
-      $data = Permintaan::select('permintaan.*','users.name as name','status.nama_status')
-      ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
-      ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
-      ->where('permintaan.deleted',1)->orderBy('permintaan.id','DESC')->get();
+      $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where('permintaan.deleted', 1)->orderBy('permintaan.id', 'DESC')->get();
       return DataTables::of($data)->make(true);
    }
 
-   public function view(){
+   public function view()
+   {
       return view('views.permintaan.permintaan');
    }
 
-   public function viewPermintaan(){
+   public function viewPermintaan()
+   {
       return view('views.permintaan.permintaanView');
    }
    public function add()
@@ -37,6 +45,28 @@ class PermintaanController extends Controller
       return view('views.permintaan.permintaaanAdd', [
          'no_aduan' => $random,
          'jenis' => $jenis,
+      ]);
+   }
+   public function updateView($id)
+   {
+      $inventaris = Inventaris::where('deleted', 1)->get();
+      $status = Status::where('deleted', 1)->get();
+
+      $data = Permintaan::select('permintaan.*', 'status.nama_status', 'status.color', 'users.name', 'users.email')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where('permintaan.id', $id)->where('permintaan.deleted', 1)->first();
+      $count = DescPermintaan::leftJoin('status', 'desc_permintaan.id_status', '=', 'status.id')
+         ->where('desc_permintaan.deleted', 1)
+         ->where('desc_permintaan.no_aduan', $data->no_aduan)
+         ->count();
+      // dd($data);
+      return view('views.permintaan.permintaanEdit', [
+         'data' => $data,
+         'total' => $count,
+         'inventaris' => $inventaris,
+         'status' => $status
+
       ]);
    }
 
@@ -55,7 +85,7 @@ class PermintaanController extends Controller
          'alasan_permintaan' => $request->alasan_permintaan,
          'no_aduan' => $request->no_aduan,
          'no_hp' => $request->no_hp,
-         'tgl_masuk' => New DateTime,
+         'tgl_masuk' => new DateTime,
          'lokasi' => $request->lokasi,
          'email_atasan' => $request->email_atasan,
          'id_status' => 1,
@@ -64,17 +94,13 @@ class PermintaanController extends Controller
       ];
 
       $data = Permintaan::create($input);
-      // $dataEmail = [$request->email, $request->email_atasan];
-      // $dataAduan = Permintaan::rightJoin('status', 'permintaan.id_status', '=', 'status.id')->where('permintaan.no_aduan', $request->no_aduan)->where('permintaan.deleted', 1)->first();
-      // // dd($dataAduan);
-      // try {
-      //    foreach ($dataEmail as $key => $value) {
-            
-      //       $this->sendMail($value,$dataAduan);
-      //    }
-      // } catch (\Throwable $th) {
-      //    dd($th);
-      // }
+      $dataAduan = Permintaan::select('permintaan.*', 'status.*')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->where('permintaan.no_aduan', $request->no_aduan)
+         ->where('permintaan.deleted', 1)->first();
+      $this->sendMail(Auth::user()->email, $dataAduan);
+      $this->sendMailApprove($request->email_atasan, $dataAduan);
+
       return response()->json($data);
    }
 
@@ -93,7 +119,8 @@ class PermintaanController extends Controller
       return response()->json($data);
    }
 
-   public function update($id,Request $request){
+   public function update($id, Request $request)
+   {
       $this->validate($request, [
          'id_user' => 'required',
          'alasan_permintaan' => 'required',
@@ -118,11 +145,10 @@ class PermintaanController extends Controller
 
       ];
 
-      $data = Permintaan::where('id',$id)->update($input);
+      $data = Permintaan::where('id', $id)->update($input);
       return response()->json($data);
-
    }
-   public function sendMail($email,$data)
+   public function sendMail($email, $data)
    {
       // dd($data);
       $mailData = [
@@ -130,11 +156,36 @@ class PermintaanController extends Controller
          'no_aduan' => $data->no_aduan,
          'no_hp' => $data->no_hp,
          'lokasi' => $data->lokasi,
-         'email' => $data->email,
+         // 'email' => $data->email,
          'email_atasan' => $data->email_atasan,
-        
-      ];
 
-      Mail::to($email)->send(new AppAduan($mailData));
-   }  
+      ];
+      Mail::to($email)->send(new AppPermintaan($mailData));
+
+      // Mail::to($email)->send(new Aduan($mailData));
+   }
+   public function sendMailApprove($email, $data)
+   {
+      // dd($data);
+      $mailData = [
+         'alasan_permintaan' => $data->alasan_permintaan,
+         'no_aduan' => $data->no_aduan,
+         'no_hp' => $data->no_hp,
+         'lokasi' => $data->lokasi,
+         // 'email' => $data->email,
+         'email_atasan' => $data->email_atasan,
+
+      ];
+      Mail::to($email)->send(new ApprovePermintaan($mailData));
+   }
+
+   public function approve($no_aduan)
+   {
+      try {
+         $data = Permintaan::where('no_aduan', $no_aduan)->first();
+         $data->update(['approve_status'=> 2]);
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
 }

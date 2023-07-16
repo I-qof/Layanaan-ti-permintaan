@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
@@ -22,7 +23,16 @@ class UserRoleController extends Controller
     }
     public function store(Request $request)
     {
-        $user = User::where('email', $request->email);
+        $password = Hash::make($request->password);
+        $input = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $password,
+       
+        ];
+        $user=User::create($input);
+
+        // $user = User::where('email', $request->email);
         $user->assignRole($request->input('roles'));
         return response()->json(['success' => 'Data Berhasil Ditambah']);
     }
@@ -37,7 +47,14 @@ class UserRoleController extends Controller
 
     public function update(Request $request)
     {
+        $password = Hash::make($request->password);
+        $dareq = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $password,
+        ];
         $user = User::find($request->id);
+        $user->update($dareq);
 
         DB::table('model_has_roles')->where('model_id', $request->id)->delete();
 

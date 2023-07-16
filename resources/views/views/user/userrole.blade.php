@@ -52,6 +52,10 @@
                             <input type="text" class="form-control" name="name" id="name">
                         </div>
                         <div class="form-group">
+                            <label class="control-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <div class="form-group">
                             <div class="row">
                                 <div class="col-md-8">
                                     <label class="control-label">Email</label><br>

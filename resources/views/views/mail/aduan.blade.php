@@ -20,7 +20,7 @@
 
     <p>Kami akan segera menindaklanjuti aduan ini. Terima kasih atas laporannya.</p>
 
-    <p>Regards,</p>
+    <p>Salam Hangat,</p>
     <p>Tim Layanan Komputer</p>
 </body>
 </html>

@@ -8,7 +8,7 @@ use App\Models\DescAduan;
 use App\Models\Inventaris;
 use App\Models\Sperpat;
 use App\Models\Status;
-use Barryvdh\DomPDF\Facade\Pdf as BarryvdhPdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +54,7 @@ class AduanController extends Controller
       $nama =$data->id .'/'.$data->tgl_masuk . ' -Laporan-Aduan.pdf';
 
       $detail = ['data'=>$data,'total' => $count,'desc'=>$desc];
-      $pdf = BarryvdhPdf::loadview('views.pengaduan.aduan_print',$detail);
+      $pdf = Pdf::loadview('views.pengaduan.aduan_print',$detail);
     	return $pdf->download($nama);
    //   return view('views.pengaduan.aduan_print',$detail);
       
