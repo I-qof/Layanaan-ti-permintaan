@@ -70,7 +70,9 @@
                             </a>
                         @endcan
                         @can('permintaan-approve', Permintaan::class)
-                            <a class="btn btn-success float-right mt-4 approve" style="display: {{ $data->approve_status == 2 ? 'none' : '' }}"><i class="ti-export me-1"></i>Approve
+                            <a class="btn btn-success float-right mt-4 approve"
+                                style="display: {{ $data->approve_status == 2 ? 'none' : '' }}"><i
+                                    class="ti-export me-1"></i>Approve
                             </a>
                         @endcan
                     </div>
@@ -82,7 +84,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Tindak Lanjut Aduan</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Tindak Lanjut Permintaan</h5>
                     <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -139,12 +141,74 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="modalStatusLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-lg-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalStatusLabel">Tindak Lanjut Permintaan</h5>
+                    <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formDataStatus" autocomplete="off">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Status deskripsi</label>
+                            <input type="text" id="id" hidden name="id">
+                        
+                            <select name="id_status_deskripsi" id="id_status_deskripsi" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Status --</option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status QC</label>
+                            <select name="id_status_qc" id="id_status_qc" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Status --</option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status Penyelesaian</label>
+                         
+                            <select name="id_status_penyelesaian" id="id_status_penyelesaian" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Status --</option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select name="id_status1" id="id_status1" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Status --</option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-light cancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modalTindakLanjut" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Tindak Lanjut Aduan</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Tindak Lanjut Permintaan</h5>
                     <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

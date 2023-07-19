@@ -1,12 +1,10 @@
 // let no_aduan = $("#no_aduan").val();
 var table = $("#tabel-main").DataTable({
-    bLengthChange: false,
+   bLengthChange: false,
     ordering: false,
     processing: true,
-
+    serverSide: true,
     autoWidth: false,
-    bfilter: false,
-    binfo: false,
     ajax: {
         url: APP_URL + "/desc-permintaan/get/" + $("#no_aduan").val(),
         method: "GET",
@@ -27,11 +25,11 @@ var table = $("#tabel-main").DataTable({
             render: function (data, type, meta, row) {
                 switch (data) {
                     case 0:
-                        return "<div class='badge badge-primary' color:#ffffff;'>Proses Pengecekan</div>";
+                        return "<div class='badge badge-primary' color:#ffffff;'>Lakukan cek</div>";
                     case 1:
-                        return "<div class='badge badge-success' color:#ffffff;'>Tersedia</div>";
-                    case 2:
                         return "<div class='badge badge-danger' color:#ffffff;'>Kosong</div>";
+                    case 2:
+                        return "<div class='badge badge-success' color:#ffffff;'>Tersedia</div>";
                     default:
                         return "<div class='badge badge-success' color:#ffffff;'>Selesai</div>";
                 }
@@ -41,23 +39,25 @@ var table = $("#tabel-main").DataTable({
             data: "nama_status",
             className: "text-center",
             render: function (data, type, row, meta) {
-            return (
-            "<div class='badge badge-primary' style='background-color:" +
-                 row.color +
-                 ";border:" +
-                 row.color +
-                 ";font-weight:bold;color:#ffffff;'>" +
-            data +
-            "</div>"
-            );
+                return (
+                    "<div class='badge badge-primary' style='background-color:" +
+                    row.color +
+                    ";border:" +
+                    row.color +
+                    ";font-weight:bold;color:#ffffff;'>" +
+                    data +
+                    "</div>"
+                );
             },
         },
 
         {
             // note :
-            // 1 = belum diisi
+            // 0 = cek barang
+            // 1 = stok kosong
             // 2 = stok tersedia
-            // 3 = stock tidak tersedia lakukan pembelian
+            // 3 = stock konfirmasi Pembelian
+            // 4 = lakukan pembelian
 
             data: null,
             render: function (data, type, row, meta) {
@@ -66,24 +66,49 @@ var table = $("#tabel-main").DataTable({
                     (data.stock_status == 0) |
                     (data.stock_status == "")
                 ) {
+                    //arahkan modal cek status apakah tersedia
                     return (
-                            "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                            "<button type='button' class='btn btn-success btnCek'>Cek</button>" +
+                        "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
+                        "<button type='button' class='btn btn-success btnCek'>Cek Stock</button>" +
                         "</div>"
                     );
-                } else if (data.stock_status == 1) {
+                } else if (data.stock_status == 2) {
+                    // arahkan modal ubah status selesai
                     return (
                         "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
                         "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
                         "</div>"
                     );
-                } else if (data.stock_status == 2) {
-                    return (
-                        "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                        "<button type='button' class='btn btn-success btnBeli'>Beli</button>" +
-                        "</div>"
-                    );
-                }else{
+                } else if (data.stock_status == 1) {
+                    //kirim email
+
+                    // note
+                    // 1 = pembelian diterima
+                    // 2 = pembeliaan ditolak
+                    // 0 = belum dilakukan pembelian
+                    if (row.pembelian_status == 1) {
+                        // menampilkan modal pembelian
+                        return (
+                            "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
+                            "<button type='button' class='btn btn-success btnBeliInventaris'>Pembelian diterima</button>" +
+                            "</div>"
+                        );
+                    } else if (row.pembelian_status == 2) {
+                        // menampilkan cek status
+                        return (
+                            "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
+                            "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
+                            "</div>"
+                        );
+                    } else {
+                        // modal konfirmasi pembelian
+                        return (
+                            "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
+                            "<button type='button' class='btn btn-success btnKonfirmasi'>Konfirmasi Pembelian</button>" +
+                            "</div>"
+                        );
+                    }
+                } else {
                     return (
                         "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
                         "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
@@ -120,8 +145,140 @@ $("#tabel-main").on("click", ".editData", function (e) {
     $("#modalAdd").modal("show");
 });
 
-$("#tabel-main").on("click", ".btnCek", function () {
+$("#tabel-main").on("click", ".btnBeli", function () {
     let id = $("#no_aduan").val();
+    swal({
+        title: "Ketersediaan Barang",
+        text: "Apakah Barang tersedia?",
+        icon: "warning",
+        className: "text-center",
+        showCancelButton: true,
+        confirmButtonColor: "#3f51b5",
+        cancelButtonColor: "#ff4081",
+        confirmButtonText: "Great ",
+        buttons: {
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Tersedia",
+                value: 1,
+                visible: true,
+                className: "btn btn-success",
+                closeModal: true,
+            },
+            confirm1: {
+                text: "Kosong",
+                value: 2,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        },
+    }).then(function (result) {
+        if (result == 1) {
+            // alert("tersedia")
+            $.ajax({
+                type: "GET",
+                url: APP_URL + "/desc-permintaan/tersedia/" + id,
+                success: function (response) {
+                    table.draw(false);
+                    $("#modalAdd").modal("hide");
+                    $.toast({
+                        heading: "Sekses",
+                        text: "Data berhasil disimpan!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                    location.reload();
+                },
+                error: function (data) {
+                    $.toast({
+                        heading: "Error",
+                        text: "Error!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                },
+            });
+        } else if (result == 2) {
+            // alert("kosong")
+            $.ajax({
+                type: "GET",
+                url: APP_URL + "/desc-permintaan/kosong/" + id,
+                success: function (response) {
+                    table.draw(false);
+                    $("#modalAdd").modal("hide");
+                    $.toast({
+                        heading: "Sekses",
+                        text: "Data berhasil disimpan!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                    location.reload();
+                },
+                error: function (data) {
+                    $.toast({
+                        heading: "Error",
+                        text: "Error!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                },
+            });
+        }
+    });
+});
+$("#tabel-main").on("click", ".btnKonfirmasi", function (e) {
+    e.preventDefault()
+    // let id = $("#no_aduan").val();
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+    $.ajax({
+        type: "GET",
+        url: APP_URL + "/desc-permintaan/kosong/" + id,
+        success: function (response) {
+            table.draw(false);
+            $("#modalAdd").modal("hide");
+            $.toast({
+                heading: "Sekses",
+                text: "Data telah terkirim Untuk Konfirmasi!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+            // location.reload();
+        },
+        error: function (data) {
+            $.toast({
+                heading: "Error",
+                text: "Error!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+        },
+    });
+});
+$("#tabel-main").on("click", ".btnCek", function () {
+    // let id = $("#no_aduan").val();
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+
     swal({
         title: "Ketersediaan Barang",
         text: "Apakah Barang tersedia?",
@@ -274,6 +431,17 @@ $(".approve").on("click", function () {
         }
     });
 });
+let id;
+$("#tabel-main").on("click",".btnProgres", function () {
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+    console.log(id);
+    $("#id_status_deskripsi").val(data.id_status_deskripsi).trigger("change");
+    $("#id_status_qc").val(data.id_status_qc).trigger("change");
+    $("#id_status_penyelesaian").val(data.id_status_penyelesaian).trigger("change");
+    $("#id_status1").val(data.id_status).trigger("change");
+    $("#modalStatus").modal("show");
+});
 $(".cancel").on("click", function () {
     $("#modalAdd").modal("hide");
 });
@@ -288,6 +456,18 @@ $("#id_statusT").select2({
     width: "100%",
 });
 $("#id_inventaris").select2({
+    width: "100%",
+});
+$("#id_status_deskripsi").select2({
+    width: "100%",
+});
+$("#id_status_qc").select2({
+    width: "100%",
+});
+$("#id_status_penyelesaian").select2({
+    width: "100%",
+});
+$("#id_status1").select2({
     width: "100%",
 });
 $(".tindakLanjut").on("click", function () {
@@ -368,4 +548,38 @@ $("#formDataTindakLanjut").on("submit", function () {
 $(".print").on("click", function () {
     let id = $("#no_aduan").val();
     window.location.href = APP_URL + "/aduan/print/" + id;
+});
+
+$("#formDataStatus").on("submit", function (event) {
+    event.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: APP_URL + "/desc-permintaan/status/" + id,
+        data: $("#formDataStatus").serialize(),
+
+        success: function (response) {
+            table.draw();
+            $("#modalStatus").modal("hide");
+            $.toast({
+                heading: "Info",
+                text: "Data berhasil disimpan!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+          
+        },
+        error: function (data) {
+            $.toast({
+                heading: "Info",
+                text: "Error!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+        },
+    });
 });

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovePermintaan;
+use App\Mail\PermintaanCustom;
+use App\Models\DescPembelian;
 use App\Models\DescPermintaan;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class DescPermintaanController extends Controller
@@ -99,35 +103,76 @@ class DescPermintaanController extends Controller
       return response()->json($data);
    }
 
-   public function tersedia($no_aduan)
+   public function tersedia($id)
    {
       try {
-         $permintaan = Permintaan::select('permintaan.*', 'users.name as name','users.email as email', 'status.nama_status')
-            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
-            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
-            ->where('permintaan.deleted', 1)
-            ->where('permintaan.no_aduan', $no_aduan)->first();
-         $data = DescPermintaan::where('no_aduan', $no_aduan)->first();
+         $data = DescPermintaan::where('id', $id)->first();
          $data->update(['stock_status' => 2]);
-         $this->sendMailApprove($permintaan->email, $permintaan);
-         $this->sendMailApprove($permintaan->email_atasan, $permintaan);
       } catch (\Throwable $th) {
          dd($th);
       }
    }
 
-   public function kosong($no_aduan)
+   public function kosong($id)
    {
       try {
-         $permintaan = Permintaan::select('permintaan.*', 'users.name as name','users.email as email', 'status.nama_status')
-            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
-            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
-            ->where('permintaan.deleted', 1)
-            ->where('permintaan.no_aduan', $no_aduan)->first();
-         $data = DescPermintaan::where('no_aduan', $no_aduan)->first();
-         $data->update(['stock_status' => 2]);
-         $this->sendMailApprove($permintaan->email, $permintaan);
-         $this->sendMailApprove($permintaan->email_atasan, $permintaan);
+         $data = DescPermintaan::where('id', $id)->first();
+
+         $content = [
+            'title' => "Konfirmasi Pembelian",
+            'content' => "Sistem kami telah melihat salah satu permintaan Anda/staff memerlukan persetujuan Anda terkait permintaan ke Layanan IT",
+            'footer' => "Anda dapat menolak dan menyetujui pembelian dengan mengklik kedua tombol di bawah ini. Demikian yang dapat kami sampaikan, kami ucapkan terima kasih.",
+            'button' => '<a href="' . route('beli', ['id' => $id]) . '">Setuju</a> <a href="' . route('tidakBeli', ['id' => $id]) . '">Tidak setuju</a>',
+         ];
+
+         try {
+            $permintaan = Permintaan::select('permintaan.*', 'users.name as name', 'users.email as email', 'status.nama_status')
+               ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+               ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+               ->where('permintaan.deleted', 1)
+               ->where('permintaan.no_aduan', $data->no_aduan)->first();
+            $data->update(['stock_status' => 1]);
+
+            $this->sendMailCostum($permintaan->email_atasan, $permintaan, $content);
+         } catch (\Throwable $th) {
+            dd($th);
+         }
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
+
+   public function beli($id)
+   {
+      try {
+         $data = DescPermintaan::where('id', $id)->first();
+         $data->update(['pembelian_status' => 1]);
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
+   public function tidakBeli($id)
+   {
+      try {
+         $data = DescPermintaan::where('id', $id)->first();
+         $data->update(['pembelian_status' => 2]);
+      } catch (\Throwable $th) {
+         dd($th);
+      }
+   }
+
+   public function status(Request $request, $id)
+   {
+      $input = [
+         'id_status_deskripsi' => $request->id_status_deskripsi,
+         'id_status_qc' => $request->id_status_qc,
+         'id_status_penyelesaian' => $request->id_status_penyelesaian,
+         'id_status' => $request->id_status1
+      ];
+      try {
+         $data = DescPermintaan::where('id', $id)->first();
+         $data->update($input);
+         return response()->json($data);
       } catch (\Throwable $th) {
          dd($th);
       }
@@ -146,5 +191,19 @@ class DescPermintaanController extends Controller
 
       ];
       Mail::to($email)->send(new ApprovePermintaan($mailData));
+   }
+   public function sendMailCostum($email, $data, $content)
+   {
+      // dd($data);
+
+      $mailData = [
+         'alasan_permintaan' => $data->alasan_permintaan,
+         'no_aduan' => $data->no_aduan,
+         'no_hp' => $data->no_hp,
+         'lokasi' => $data->lokasi,
+         // 'email' => $data->email,
+         'email_atasan' => $data->email_atasan,
+      ];
+      Mail::to($email)->send(new PermintaanCustom($mailData, $content));
    }
 }

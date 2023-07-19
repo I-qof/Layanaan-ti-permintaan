@@ -12,13 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class PermintaanCustom extends Mailable
 {
     use Queueable, SerializesModels;
+    public $mailData,$content;
+    // ,$content,$footer,$button;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($mailData,$content)
     {
-        //
+        $this->mailData = $mailData;
+        $this->content = $content;
     }
 
     /**
@@ -27,7 +30,7 @@ class PermintaanCustom extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Permintaan Custom',
+            subject: 'Deskripsi Permintaan Layanaan TI',
         );
     }
 
@@ -37,7 +40,7 @@ class PermintaanCustom extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'views.mail.permintaanCostum',
         );
     }
 

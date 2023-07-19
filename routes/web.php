@@ -109,7 +109,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'desc-aduan'], function () {
         Route::get('/get', [DescAduanController::class, 'index']);
         Route::get('/getById/{id}', [DescAduanController::class, 'getById']);
-
         Route::post('/update/{id}', [DescAduanController::class, 'update']);
         Route::get('/delete/{id}', [DescAduanController::class, 'destroy']);
     });
@@ -131,6 +130,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [DescPermintaanController::class, 'store']);
         Route::post('/update/{id}', [DescPermintaanController::class, 'update']);
         Route::get('/delete/{id}', [DescPermintaanController::class, 'destroy']);
+        Route::get('/kosong/{id}', [DescPermintaanController::class, 'kosong'])->name('kosong');
+        Route::get('/tersedia/{id}', [DescPermintaanController::class, 'tersedia'])->name('tersedia');
+        Route::get('/beli/{id}', [DescPermintaanController::class, 'beli'])->name('beli');
+        Route::get('/tidakBeli/{id}', [DescPermintaanController::class, 'tidakBeli'])->name('tidakBeli');
+        Route::post('/status/{id}', [DescPermintaanController::class, 'status']);
+        Route::get('/beli/{id}', [DescPermintaanController::class, 'beli']);
     });
 
     // Route::group(['prefix' => 'barang_pakai/aduan'], function () {

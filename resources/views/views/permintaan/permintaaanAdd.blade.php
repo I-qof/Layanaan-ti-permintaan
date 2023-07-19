@@ -43,7 +43,7 @@
                                     </div>
                                     <label>Alasan Permintaan</label>
 
-                                    <textarea type="text" class="form-control w-100" id="alasan_permintaan" required name="alasan_permintaan"
+                                    <textarea type="text" class="form-control w-100" style="width: 100%;resize: vertical;" id="alasan_permintaan" required name="alasan_permintaan"
                                         style="width: 100%" aria-describedby="text" placeholder="Masukkan alasan permintaan anda"></textarea>
                                 </div>
 
@@ -62,7 +62,7 @@
                                                                 Data</button>
                                                         </th>
                                                         <th>No Inventaris</th>
-                                                        <th>Kerusakan</th>
+                                                        <th>Deskripsi</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
@@ -96,7 +96,7 @@
         <div class="modal-dialog modal-fullscreen-md-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Tambah data Kerusakan</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Tambah data Pemmintaan</h5>
                     <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -117,7 +117,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputUsername1">deskripsi</label>
+                            <label for="exampleInputUsername1">Deskripsi Barang dibeli</label>
                             <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" required
                                 placeholder="Harap Isikan Spesifikasi Permintaaan deskripsi" style="width: 100%;resize: vertical;" rows="4"></textarea>
                         </div>

@@ -96,13 +96,18 @@ $("#openModal").on("click", function (e) {
     e.preventDefault();
     id = 0;
     $("#modalAdd").modal("show");
+    $("#formData").trigger("reset");
 });
 
 $(".cancel").on("click", function () {
     $("#modalAdd").modal("hide");
+    $("#formData").trigger("reset");
+
 });
 $(".close").on("click", function () {
     $("#modalAdd").modal("hide");
+    $("#formData").trigger("reset");
+
 });
 
 $("#formData").on("submit", function (event) {
