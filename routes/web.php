@@ -121,6 +121,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/update/{id}', [PermintaanController::class, 'update']);
         Route::get('/delete/{id}', [PermintaanController::class, 'destroy']);
         Route::get('/updateView/{id}', [PermintaanController::class, 'updateView']);
+        Route::get('/tindakLanjut/{id}', [PermintaanController::class, 'tindakLanjut']);
+
 
     });
 

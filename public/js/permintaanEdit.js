@@ -1,6 +1,6 @@
 // let no_aduan = $("#no_aduan").val();
 var table = $("#tabel-main").DataTable({
-   bLengthChange: false,
+    bLengthChange: false,
     ordering: false,
     processing: true,
     serverSide: true,
@@ -90,14 +90,14 @@ var table = $("#tabel-main").DataTable({
                         // menampilkan modal pembelian
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                            "<button type='button' class='btn btn-success btnBeliInventaris'>Pembelian diterima</button>" +
+                            "<button type='button' class='btn btn-primary btnBeliInventaris'>Pembelian diterima</button>" +
                             "</div>"
                         );
                     } else if (row.pembelian_status == 2) {
                         // menampilkan cek status
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                            "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
+                            "<button type='button' class='btn btn-danger btnProgres'>Permintaan ditolak</button>" +
                             "</div>"
                         );
                     } else {
@@ -119,6 +119,32 @@ var table = $("#tabel-main").DataTable({
             className: "text-center",
         },
     ],
+});
+$("#tabel-main").on("click", ".btnBeliInventaris", function (e) {
+    e.preventDefault();
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+    $("#id_desc_permintaan").val(response.data.id);
+    //fungsi cek pembelian
+    $.ajax({
+        type: "get",
+        url: APP_URL + "/desc-pembelian/getById/" + id,
+        success: function (response) {
+            console.log(response);
+            $("#url_pembelian").val(response.data.url_pembelian);
+            $("#harga_beli").val(response.data.harga_beli);
+            $("#no_inventaris")
+                .val(response.data.no_inventaris)
+                .trigger("change");
+            $("#status_pembayaran")
+                .val(response.data.status_pembayaran)
+                .trigger("change");
+        },
+        error: function () {
+            console.log("error");
+        },
+    });
+    $("#modalAddBeli").modal("show");
 });
 $("#tabel-main").on("click", ".editData", function (e) {
     e.preventDefault();
@@ -242,7 +268,7 @@ $("#tabel-main").on("click", ".btnBeli", function () {
     });
 });
 $("#tabel-main").on("click", ".btnKonfirmasi", function (e) {
-    e.preventDefault()
+    e.preventDefault();
     // let id = $("#no_aduan").val();
     data = table.rows($(this).closest("tr").index()).data()[0];
     id = data.id;
@@ -432,13 +458,15 @@ $(".approve").on("click", function () {
     });
 });
 let id;
-$("#tabel-main").on("click",".btnProgres", function () {
+$("#tabel-main").on("click", ".btnProgres", function () {
     data = table.rows($(this).closest("tr").index()).data()[0];
     id = data.id;
     console.log(id);
     $("#id_status_deskripsi").val(data.id_status_deskripsi).trigger("change");
     $("#id_status_qc").val(data.id_status_qc).trigger("change");
-    $("#id_status_penyelesaian").val(data.id_status_penyelesaian).trigger("change");
+    $("#id_status_penyelesaian")
+        .val(data.id_status_penyelesaian)
+        .trigger("change");
     $("#id_status1").val(data.id_status).trigger("change");
     $("#modalStatus").modal("show");
 });
@@ -450,6 +478,12 @@ $(".close").on("click", function () {
 });
 
 $("#id_status").select2({
+    width: "100%",
+});
+$("#no_inventaris").select2({
+    width: "100%",
+});
+$("#status_pembayaran").select2({
     width: "100%",
 });
 $("#id_statusT").select2({
@@ -510,11 +544,13 @@ $("#formData").on("submit", function (event) {
         },
     });
 });
-$("#formDataTindakLanjut").on("submit", function () {
+$("#formDataTindakLanjut").on("submit", function (e) {
+    e.preventDefault();
     let id = $("#idAduan").val();
+    console.log(id);
     $.ajax({
-        type: "POST",
-        url: APP_URL + "/aduan/tindakLanjut/" + id,
+        type: "GET",
+        url: APP_URL + "/permintaan/tindakLanjut/" + id,
         data: $("#formDataTindakLanjut").serialize(),
 
         success: function (response) {
@@ -569,7 +605,6 @@ $("#formDataStatus").on("submit", function (event) {
                 loaderBg: "#46c35f",
                 position: "top-right",
             });
-          
         },
         error: function (data) {
             $.toast({

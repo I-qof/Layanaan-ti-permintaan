@@ -80,7 +80,60 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel" aria-hidden="true">
+    <div class="modal fade" id="modalAddBeli" tabindex="-1" role="dialog" aria-labelledby="modalAddBeliLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddBeliLabel">Tindak Lanjut Permintaan</h5>
+                    <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formDataBeli" autocomplete="off">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">URL Pembelian</label>
+                            <input type="text" id="id_desc_permintaan" hidden name="id_desc_permintaan">
+                            <input type="text" class="form-control" name="url_pembelian" id="url_pembelian">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">No. Inventaris</label>
+                           
+                            <select name="no_inventaris" id="no_inventaris" class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Inventaris --</option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">status_pembayaran</label>
+                            <select name="status_pembayaran" id="status_pembayaran" class="js-example-basic-single w-100">
+                                <option value="">-- Pilih Status Pembayaran --</option>
+
+                                <option value="Lunas">Lunas</option>
+                                <option value="Belum Lunas">Belum Lunas</option>
+                               
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">harga_beli</label>
+                            <input type="number" class="form-control" name="harga_beli" id="harga_beli">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-light cancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,7 +164,8 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Status</label>
-                                    <select name="id_status" id="id_status" class="js-example-basic-single w-100" required>
+                                    <select name="id_status" id="id_status" class="js-example-basic-single w-100"
+                                        required>
                                         <option value="">-- Pilih Status --</option>
                                         @foreach ($status as $item)
                                             <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
@@ -123,7 +177,8 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">sperpat</label>
-                                    <select name="id_inventaris" id="id_inventaris" class="js-example-basic-single w-100">
+                                    <select name="id_inventaris" id="id_inventaris"
+                                        class="js-example-basic-single w-100">
                                         <option value="">-- Pilih Nomor sperpat --</option>
                                         @foreach ($inventaris as $item)
                                             <option value="{{ $item->id }}">{{ $item->nama_inventaris }}</option>
@@ -157,8 +212,9 @@
                         <div class="form-group">
                             <label for="exampleInputUsername1">Status deskripsi</label>
                             <input type="text" id="id" hidden name="id">
-                        
-                            <select name="id_status_deskripsi" id="id_status_deskripsi" class="js-example-basic-single w-100" required>
+
+                            <select name="id_status_deskripsi" id="id_status_deskripsi"
+                                class="js-example-basic-single w-100" required>
                                 <option value="">-- Pilih Status --</option>
                                 @foreach ($status as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
@@ -176,8 +232,9 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status Penyelesaian</label>
-                         
-                            <select name="id_status_penyelesaian" id="id_status_penyelesaian" class="js-example-basic-single w-100" required>
+
+                            <select name="id_status_penyelesaian" id="id_status_penyelesaian"
+                                class="js-example-basic-single w-100" required>
                                 <option value="">-- Pilih Status --</option>
                                 @foreach ($status as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_status }}</option>

@@ -21,9 +21,9 @@
     </ul>
 
     <p>{{ $content['footer'] }}</p>
-    {{ $content['button'] }}
-    {{-- <button href="{{ route('beli') }}">Setuju</button>
-    <button href="{{ route('tidakBeli') }}">Tidak setuju</button> --}}
+    {!! $content['button'] !!}
+    {{-- <button href="{{ URL::to('beli/' . $id) }}">Setuju</button>
+    <button href="{{ URL::to('tidakBeli/' . $id) }}">Tidak setuju</button> --}}
     <p>Salam Hangat,</p>
     <p>Tim Layanan Komputer</p>
 </body>

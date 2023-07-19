@@ -188,4 +188,16 @@ class PermintaanController extends Controller
          dd($th);
       }
    }
+   public function tindakLanjut($id,Request $request){
+      $input = [ 
+         'id_status'=>$request->id_status,
+         'nama_pengambil'=>$request->nama_pengambil,
+         'tgl_keluar'=>$request->tgl_keluar,
+
+      ];
+
+      $data = Permintaan::where('id',$id)->first();
+      $update = $data->update($input);
+      return response()->json($update);
+   } 
 }

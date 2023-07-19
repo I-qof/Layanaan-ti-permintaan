@@ -10,6 +10,7 @@ use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Yajra\DataTables\DataTables;
 
 class DescPermintaanController extends Controller
@@ -122,8 +123,8 @@ class DescPermintaanController extends Controller
             'title' => "Konfirmasi Pembelian",
             'content' => "Sistem kami telah melihat salah satu permintaan Anda/staff memerlukan persetujuan Anda terkait permintaan ke Layanan IT",
             'footer' => "Anda dapat menolak dan menyetujui pembelian dengan mengklik kedua tombol di bawah ini. Demikian yang dapat kami sampaikan, kami ucapkan terima kasih.",
-            'button' => '<a href="' . route('beli', ['id' => $id]) . '">Setuju</a> <a href="' . route('tidakBeli', ['id' => $id]) . '">Tidak setuju</a>',
-         ];
+            'button' => '<a href="' . URL::to('desc-permintaan/beli/' . $id) . '" style="display: inline-block; margin-right: 10px; padding: 10px 20px; background-color: #336699; color: #ffffff; text-decoration: none;">Setuju</a> <a href="' . URL::to('desc-permintaan/tidakBeli/' . $id) . '" style="display: inline-block; padding: 10px 20px; background-color: #ff0000; color: #ffffff; text-decoration: none;">Tidak setuju</a>',
+        ];
 
          try {
             $permintaan = Permintaan::select('permintaan.*', 'users.name as name', 'users.email as email', 'status.nama_status')
