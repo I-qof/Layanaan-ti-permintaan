@@ -20,25 +20,28 @@ class DescPembelianController extends Controller
             'no_inventaris' => 'required',
             'status_pembayaran' => 'required',
             'harga_beli' => 'required',
-            'id_desc_permintaan' => 'required'
+            // 'id_desc_permintaan' => 'required'
         ]);
 
         $input = [
             'url_pembelian' => $request->url_pembelian,
             'no_inventaris' => $request->no_inventaris,
-            'status_pembayaran'=> $request->status_pembayaran,
-            'harga_beli'=> $request->harga_beli,
-            'id_desc_permintaan'=> $request->id_desc_permintaan
+            'status_pembayaran' => $request->status_pembayaran,
+            'harga_beli' => $request->harga_beli,
+            'id_desc_permintaan' => $request->id_desc_permintaan
         ];
 
-        $data = DescPembelian::create($input);
+        $cari = DescPembelian::where('id_desc_permintaan', $request->id_desc_permintaan)->first();
+
+
+        $data = $cari ? $cari->update($input) : DescPembelian::create($input);
         return response()->json($data);
     }
 
 
     public function getById($id)
     {
-        $data = DescPembelian::where('id', $id)->first();
+        $data = DescPembelian::where('id_desc_permintaan', $id)->first();
         return response()->json(['data' => $data]);
     }
 
@@ -55,19 +58,17 @@ class DescPembelianController extends Controller
         $this->validate($request, [
             'url_pembelian' => 'required',
             'no_inventaris' => 'required',
-            'status_pembayaran'=> 'required',
-            'harga_beli'=> 'required',
-            'id_desc_permintaan'=> 'required'
+            'status_pembayaran' => 'required',
+            'harga_beli' => 'required',
+            'id_desc_permintaan' => 'required'
         ]);
 
         $input = [
             'url_pembelian' => $request->url_pembelian,
             'no_inventaris' => $request->no_inventaris,
-            'status_pembayaran'=> $request->status_pembayaran,
-            'harga_beli'=> $request->harga_beli,
-            'id_desc_permintaan'=> $request->id_desc_permintaan
-
-
+            'status_pembayaran' => $request->status_pembayaran,
+            'harga_beli' => $request->harga_beli,
+            'id_desc_permintaan' => $request->id_desc_permintaan 
         ];
 
         $data = DescPembelian::where('id', $id)->update($input);

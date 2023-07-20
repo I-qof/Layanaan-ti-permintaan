@@ -66,7 +66,9 @@
                         <a href="#" class="btn btn-primary float-right mt-4 ms-2 print"><i
                                 class="ti-printer me-1"></i>Print</a>
                         @can('permintaan-tindak-lanjut', Permintaan::class)
-                            <a class="btn btn-success float-right mt-4 tindakLanjut"><i class="ti-export me-1"></i>Tindak Lanjut
+                            <a class="btn btn-warning float-right mt-4 tindakLanjut"><i class="ti-export me-1"></i>Tindak Lanjut
+                            </a>
+                            <a class="btn btn-info float-right mt-4 btnAmbil"><i class="ti-export me-1"></i>Ambil Barang
                             </a>
                         @endcan
                         @can('permintaan-approve', Permintaan::class)
@@ -85,7 +87,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddBeliLabel">Tindak Lanjut Permintaan</h5>
+                    <h5 class="modal-title" id="modalAddBeliLabel">Tindak Lanjut Pembelian</h5>
                     <button class="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,13 +105,13 @@
                            
                             <select name="no_inventaris" id="no_inventaris" class="js-example-basic-single w-100" required>
                                 <option value="">-- Pilih Inventaris --</option>
-                                @foreach ($status as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_status }}</option>
+                                @foreach ($inventaris as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_inventaris }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">status_pembayaran</label>
+                            <label for="exampleInputEmail1">Status Pembayaran</label>
                             <select name="status_pembayaran" id="status_pembayaran" class="js-example-basic-single w-100">
                                 <option value="">-- Pilih Status Pembayaran --</option>
 
@@ -119,7 +121,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">harga_beli</label>
+                            <label for="exampleInputEmail1">Harga Beli</label>
                             <input type="number" class="form-control" name="harga_beli" id="harga_beli">
                         </div>
                         

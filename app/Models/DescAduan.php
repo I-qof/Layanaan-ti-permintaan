@@ -11,4 +11,5 @@ class DescAduan extends Model
     protected $primaryKey = 'id';
     protected $table = 'desc_aduan';
     protected $guarded = [''];
+    
 }

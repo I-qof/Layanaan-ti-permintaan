@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangPakaiAduanController;
 use App\Http\Controllers\BarangPakaiPermintaanController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DescAduanController;
+use App\Http\Controllers\DescPembelianController;
 use App\Http\Controllers\DescPermintaanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventarisController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\SperpatController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserRoleController;
 use App\Models\Aduan;
+use App\Models\DescPembelian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -122,8 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', [PermintaanController::class, 'destroy']);
         Route::get('/updateView/{id}', [PermintaanController::class, 'updateView']);
         Route::get('/tindakLanjut/{id}', [PermintaanController::class, 'tindakLanjut']);
-
-
+        Route::get('/ambil/{id}', [PermintaanController::class, 'ambil']);
     });
 
     Route::group(['prefix' => 'desc-permintaan'], function () {
@@ -138,6 +139,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/tidakBeli/{id}', [DescPermintaanController::class, 'tidakBeli'])->name('tidakBeli');
         Route::post('/status/{id}', [DescPermintaanController::class, 'status']);
         Route::get('/beli/{id}', [DescPermintaanController::class, 'beli']);
+    });
+
+    Route::group(['prefix' => 'desc-pembelian'], function () {
+        Route::get('/get', [DescPembelianController::class, 'get']);
+        Route::get('/getById/{id}', [DescPembelianController::class, 'getById']);
+        Route::post('/store', [DescPembelianController::class, 'store']);
+        Route::post('/update/{id}', [DescPembelianController::class, 'update']);
+        Route::post('/destroy/{id}', [DescPembelianController::class, 'destroy/{id}']);
     });
 
     // Route::group(['prefix' => 'barang_pakai/aduan'], function () {

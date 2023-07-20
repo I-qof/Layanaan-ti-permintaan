@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Aduan;
 use App\Mail\ApprovePermintaan;
 use App\Mail\Permintaan as AppPermintaan;
+use App\Mail\PermintaanCustom;
 use App\Models\DescPermintaan;
 use App\Models\Inventaris;
 use App\Models\Jenis_barang;
@@ -183,21 +184,53 @@ class PermintaanController extends Controller
    {
       try {
          $data = Permintaan::where('no_aduan', $no_aduan)->first();
-         $data->update(['approve_status'=> 2]);
+         $data->update(['approve_status' => 2]);
       } catch (\Throwable $th) {
          dd($th);
       }
    }
-   public function tindakLanjut($id,Request $request){
-      $input = [ 
-         'id_status'=>$request->id_status,
-         'nama_pengambil'=>$request->nama_pengambil,
-         'tgl_keluar'=>$request->tgl_keluar,
+   public function tindakLanjut($id, Request $request)
+   {
+      $input = [
+         'id_status' => $request->id_status,
+         'nama_pengambil' => $request->nama_pengambil,
+         'tgl_keluar' => $request->tgl_keluar,
 
       ];
 
-      $data = Permintaan::where('id',$id)->first();
+      $data = Permintaan::where('id', $id)->first();
       $update = $data->update($input);
       return response()->json($update);
-   } 
+   }
+   public function sendMailCostum($email, $data, $content)
+   {
+      // dd($data);
+
+      $mailData = [
+         'alasan_permintaan' => $data->alasan_permintaan,
+         'no_aduan' => $data->no_aduan,
+         'no_hp' => $data->no_hp,
+         'lokasi' => $data->lokasi,
+         // 'email' => $data->email,
+         'email_atasan' => $data->email_atasan,
+      ];
+      Mail::to($email)->send(new PermintaanCustom($mailData, $content));
+   }
+
+   public function ambil($id)
+   {
+      $content = [
+         'title' => "Konfirmasi Pengambilan Barang",
+         'content' => "Sistem kami telah melihat salah satu permintaan Anda/staff  terkait permintaan ke Layanan IT, barang yang anda minta sudah dapat dilakukan pengambilan",
+         'footer' => "Anda dapat melakukan pengambilan perangkat digedung Layanaan TI, PT.Pupuk Sriwijaya Palembang. Demikian yang dapat kami sampaikan, kami ucapkan terima kasih.",
+         'button' => '',
+      ];
+      $permintaan = Permintaan::select('permintaan.*', 'users.name as name', 'users.email as email', 'status.nama_status')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where('permintaan.deleted', 1)
+         ->where('permintaan.no_aduan', $id)->first();
+
+      $this->sendMailCostum($permintaan->email, $permintaan, $content);
+   }
 }

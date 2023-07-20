@@ -91,6 +91,7 @@ var table = $("#tabel-main").DataTable({
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
                             "<button type='button' class='btn btn-primary btnBeliInventaris'>Pembelian diterima</button>" +
+                            "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
                             "</div>"
                         );
                     } else if (row.pembelian_status == 2) {
@@ -124,7 +125,8 @@ $("#tabel-main").on("click", ".btnBeliInventaris", function (e) {
     e.preventDefault();
     data = table.rows($(this).closest("tr").index()).data()[0];
     id = data.id;
-    $("#id_desc_permintaan").val(response.data.id);
+    $("#id_desc_permintaan").val(id);
+    // alert(id);
     //fungsi cek pembelian
     $.ajax({
         type: "get",
@@ -585,6 +587,64 @@ $(".print").on("click", function () {
     let id = $("#no_aduan").val();
     window.location.href = APP_URL + "/aduan/print/" + id;
 });
+$(".btnAmbil").on("click", function () {
+    let id = $("#no_aduan").val();
+    console.log(id);
+    swal({
+        title: "Kirim Email?",
+        text: "Apakah anda yakin melakukan pengiriman email kepada user untuk melakukan pengambilan perangkat!",
+        className: "item-center",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3f51b5",
+        cancelButtonColor: "#ff4081",
+        confirmButtonText: "Great ",
+        buttons: {
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        },
+    }).then(function (result) {
+        if (result) {
+            $.ajax({
+                type: "GET",
+                url: APP_URL + "/permintaan/ambil/" + id,
+                success: function (response) {
+                    table.draw(false);
+                    $.toast({
+                        heading: "Sekses",
+                        text: "Email Berhasil Dikirim!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                },
+                error: function (data) {
+                    $.toast({
+                        heading: "Error",
+                        text: "Error!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
+                },
+            });
+        }
+    });
+});
 
 $("#formDataStatus").on("submit", function (event) {
     event.preventDefault();
@@ -597,6 +657,38 @@ $("#formDataStatus").on("submit", function (event) {
         success: function (response) {
             table.draw();
             $("#modalStatus").modal("hide");
+            $.toast({
+                heading: "Info",
+                text: "Data berhasil disimpan!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+        },
+        error: function (data) {
+            $.toast({
+                heading: "Info",
+                text: "Error!",
+                showHideTransition: "slide",
+                icon: "info",
+                loaderBg: "#46c35f",
+                position: "top-right",
+            });
+        },
+    });
+});
+$("#formDataBeli").on("submit", function (event) {
+    event.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: APP_URL + "/desc-pembelian/store",
+        data: $("#formDataBeli").serialize(),
+
+        success: function (response) {
+            table.draw();
+            $("#modalAddBeli").modal("hide");
             $.toast({
                 heading: "Info",
                 text: "Data berhasil disimpan!",
