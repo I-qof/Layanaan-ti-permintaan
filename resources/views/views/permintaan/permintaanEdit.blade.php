@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">No. Inventaris</label>
-                           
+
                             <select name="no_inventaris" id="no_inventaris" class="js-example-basic-single w-100" required>
                                 <option value="">-- Pilih Inventaris --</option>
                                 @foreach ($inventaris as $item)
@@ -117,14 +117,14 @@
 
                                 <option value="Lunas">Lunas</option>
                                 <option value="Belum Lunas">Belum Lunas</option>
-                               
+
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Harga Beli</label>
                             <input type="number" class="form-control" name="harga_beli" id="harga_beli">
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Simpan</button>
@@ -212,6 +212,18 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="exampleInputEmail1">No. Inventaris</label>
+                            <select name="id_inventarisStatus" id="id_inventarisStatus"
+                                class="js-example-basic-single w-100" required>
+                                <option value="">-- Pilih Inventaris --</option>
+                                @foreach ($inventaris as $item)
+                                    @if ($item->status_pemakaian == 1)
+                                        <option value="{{ $item->id }}">{{ $item->nama_inventaris }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputUsername1">Status deskripsi</label>
                             <input type="text" id="id" hidden name="id">
 
@@ -223,6 +235,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status QC</label>
                             <select name="id_status_qc" id="id_status_qc" class="js-example-basic-single w-100" required>

@@ -73,14 +73,17 @@
                            @endcan
                            @can('menu-inventaris', Inventaris::class)
                                <li class="nav-item {{ Request::is(['inventaris/*','inventaris']) ? 'active' : '' }}"> <a class="nav-link"
-                                       href="{{ URL::to('/inventaris') }}">Inventaris</a>
+                                       href="{{ URL::to('/inventaris') }}">Stock Masuk</a>
+                               </li>
+                               <li class="nav-item {{ Request::is(['inventaris/*','inventarisKeluar']) ? 'active' : '' }}"> <a class="nav-link"
+                                       href="{{ URL::to('/inventarisKeluar') }}">Stock Keluar</a>
                                </li>
                            @endcan
-                           @can('menu-departement', departement::class)
+                           {{-- @can('menu-departement', departement::class)
                                <li class="nav-item {{ Request::is(['departement/*','departement']) ? 'active' : '' }}"> <a class="nav-link"
                                        href="{{ URL::to('/departement') }}">departement</a>
                                </li>
-                           @endcan
+                           @endcan --}}
                        </ul>
                    </div>
                </li>

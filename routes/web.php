@@ -44,6 +44,9 @@ Auth::routes();
 Route::get('/dashboard', function () {
     return view('views.dashboard');
 });
+Route::get('/me',[UserRoleController::class,'me']);
+Route::get('/permintaan/search/{no_aduan}',[PermintaanController::class,'search']);
+Route::get('/permintaan/print/{no_aduan}',[PermintaanController::class,'print']);
 // Route::get('/aduan/search/{no_aduan}',[AduanController::class,'search']);
 // Route::get('/aduan/print/{no_aduan}',[AduanController::class,'print']);
 
@@ -70,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/departement', [DepartementController::class, 'view'])->name('departement');
     // Route::get('/sperpat', [SperpatController::class, 'view'])->name('sperpat');
     Route::get('/inventaris', [InventarisController::class, 'view'])->name('inventaris');
+    Route::get('/inventarisKeluar', [InventarisController::class, 'viewKeluar'])->name('inventarisKeluar');
     Route::get('/jenis-barang', [JenisBarangController::class, 'view'])->name('jenis-barang');
     Route::get('/user-role', [UserRoleController::class, 'view'])->name('user-role');
     Route::get('/role', [RoleController::class, 'view'])->name('role');
@@ -79,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'userroles'], function () {
         Route::get('/get', [UserRoleController::class, 'index']);
         Route::get('/{id}', [UserRoleController::class, 'getById']);
+        Route::get('/delete/{id}', [UserRoleController::class, 'destroy']);
         Route::post('/store', [UserRoleController::class, 'store']);
         Route::patch('/update', [UserRoleController::class, 'update']);
     });
@@ -167,6 +172,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'inventaris'], function () {
         Route::get('/get', [InventarisController::class, 'index']);
+        Route::get('/get/keluar', [InventarisController::class, 'keluar']);
         Route::get('/getById/{id}', [InventarisController::class, 'getById']);
         Route::post('/store', [InventarisController::class, 'store']);
         Route::post('/update/{id}', [InventarisController::class, 'update']);

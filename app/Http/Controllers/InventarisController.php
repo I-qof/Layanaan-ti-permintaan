@@ -12,13 +12,24 @@ class InventarisController extends Controller
 {
     public function index()
    {
-      $data = DB::connection('mysql')->select("SELECT * FROM inventaris where deleted = 1");
+      $data = DB::connection('mysql')->select("SELECT * FROM inventaris where deleted = 1 AND status_pemakaian = 1");
+      return DataTables::of($data)->make(true);
+   }
+    public function keluar()
+   {
+      $data = DB::connection('mysql')->select("SELECT * FROM inventaris where deleted = 1 AND status_pemakaian = 2");
       return DataTables::of($data)->make(true);
    }
 
    public function view(){
       $jenis = Jenis_barang::where('deleted',1)->get();
       return view('views.masterData.inventaris',[
+         'jenis'=>$jenis
+      ]);
+   }
+   public function viewKeluar(){
+      $jenis = Jenis_barang::where('deleted',1)->get();
+      return view('views.masterData.inventarisKeluar',[
          'jenis'=>$jenis
       ]);
    }

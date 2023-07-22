@@ -21,9 +21,10 @@ var table = $("#tabel-main").DataTable({
             data: "nama_jenis",
             className: "text-center",
         },
-     
-       
-      
+        {   
+            data: "jumlah_stok",
+            className: "text-center",
+        },
         {
             data: null,
             render: function (data, type, row) {
@@ -49,6 +50,7 @@ $("#tabel-main").on("click", ".editData", function () {
 
 $("#openModal").on("click", function () {
     id = 0;
+    $("#nama_jenis").val("");
     $("#modalAdd").modal("show")
 });
 

@@ -11,7 +11,12 @@ class JenisBarangController extends Controller
 {
    public function index()
    {
-      $data = DB::connection('mysql')->select("SELECT * FROM jenis_barang where deleted = 1");
+      $data = DB::table('jenis_barang')
+            ->leftJoin('inventaris', 'jenis_barang.id', '=', 'inventaris.id_jenis')
+            ->select('jenis_barang.id', 'jenis_barang.nama_jenis', DB::raw('COUNT(inventaris.id) AS jumlah_stok'))
+            ->where('jenis_barang.deleted', '=', 1)
+            ->groupBy('jenis_barang.id', 'jenis_barang.nama_jenis')
+            ->get();
       return DataTables::of($data)->make(true);
    }
 

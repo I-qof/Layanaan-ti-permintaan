@@ -6,6 +6,7 @@ use App\Mail\ApprovePermintaan;
 use App\Mail\PermintaanCustom;
 use App\Models\DescPembelian;
 use App\Models\DescPermintaan;
+use App\Models\Inventaris;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +85,7 @@ class DescPermintaanController extends Controller
          ];
       } else {
          $input = [
-            'id_inventaris' => $request->id_inventaris,
+            'id_inventaris' => $request->id_inventarisStatus,
             'diagnosa' => $request->diagnosa,
             'deskripsi' => $request->deskripsi,
             'id_status_deskripsi' => $request->id_status_deskripsi,
@@ -165,6 +166,7 @@ class DescPermintaanController extends Controller
    public function status(Request $request, $id)
    {
       $input = [
+         'id_inventaris' => $request->id_inventarisStatus,
          'id_status_deskripsi' => $request->id_status_deskripsi,
          'id_status_qc' => $request->id_status_qc,
          'id_status_penyelesaian' => $request->id_status_penyelesaian,
@@ -172,6 +174,7 @@ class DescPermintaanController extends Controller
       ];
       try {
          $data = DescPermintaan::where('id', $id)->first();
+         $inventaris = Inventaris::where('id',$request->id_inventarisStatus)->update(['status_pemakaian'=>2]);
          $data->update($input);
          return response()->json($data);
       } catch (\Throwable $th) {

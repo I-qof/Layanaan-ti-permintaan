@@ -67,31 +67,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Departement</h4>
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-muted">Nama </p>
-                                    <p class="text-muted">{{ $user }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="text-muted">Saldo</h4>
-                                    <h4 class="font-weight-bold">Rp. {{ $user }}</h4>
+                    {{-- <div class="row justify-content-center">
+                        <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Departement</h4>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="text-muted">Nama </p>
+                                        <p class="text-muted">{{ $user }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="text-muted">Saldo</h4>
+                                        <h4 class="font-weight-bold">Rp. {{ $user }}</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                </div>
+                    </div> --}}
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @push('scripts')
-        <script src="{{ URL::asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-        <script src="{{ URL::asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
-        {{-- <script src="{{ URL::asset('assets/js/data-table.js') }}"></script> --}}
-        <script src="{{ URL::asset('js/inventaris.js') }}" type="text/javascript"></script>
-    @endpush
+@push('scripts')
+    <script src="{{ URL::asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/js/data-table.js') }}"></script> --}}
+    <script src="{{ URL::asset('js/inventaris.js') }}" type="text/javascript"></script>
+@endpush

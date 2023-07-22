@@ -188,7 +188,8 @@
     <script src="{{ URL::asset('assetsProfil/js/scripts.js') }}"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="{{ URL::asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
-    <script src="{{ URL::asset('js/pengaduanView.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('js/permintaanView.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ URL::asset('js/pengaduanView.js') }}" type="text/javascript"></script> --}}
 
     <script>
         AOS.init({

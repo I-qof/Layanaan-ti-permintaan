@@ -25,7 +25,7 @@ var table = $("#tabel-main").DataTable({
             render: function (data, type, meta, row) {
                 switch (data) {
                     case 0:
-                        return "<div class='badge badge-primary' color:#ffffff;'>Lakukan cek</div>";
+                        return "<div class='badge badge-primary lakukanCek' color:#ffffff;'>Lakukan cek</div>";
                     case 1:
                         return "<div class='badge badge-danger' color:#ffffff;'>Kosong</div>";
                     case 2:
@@ -69,14 +69,14 @@ var table = $("#tabel-main").DataTable({
                     //arahkan modal cek status apakah tersedia
                     return (
                         "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                        "<button type='button' class='btn btn-success btnCek'>Cek Stock</button>" +
+                        "<button type='button' class='btn btn-success btnCek permintaan-tindak-lanjut'>Cek Stock</button>" +
                         "</div>"
                     );
                 } else if (data.stock_status == 2) {
                     // arahkan modal ubah status selesai
                     return (
                         "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                        "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
+                        "<button type='button' class='btn btn-success btnProgres permintaan-tindak-lanjut'>Cek Status</button>" +
                         "</div>"
                     );
                 } else if (data.stock_status == 1) {
@@ -91,28 +91,28 @@ var table = $("#tabel-main").DataTable({
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
                             "<button type='button' class='btn btn-primary btnBeliInventaris'>Pembelian diterima</button>" +
-                            "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
+                            "<button type='button' class='btn btn-success btnProgres permintaan-tindak-lanjut'>Cek Status</button>" +
                             "</div>"
                         );
                     } else if (row.pembelian_status == 2) {
                         // menampilkan cek status
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                            "<button type='button' class='btn btn-danger btnProgres'>Permintaan ditolak</button>" +
+                            "<button type='button' class='btn btn-danger btnProgres permintaan-tindak-lanjut'>Permintaan ditolak</button>" +
                             "</div>"
                         );
                     } else {
                         // modal konfirmasi pembelian
                         return (
                             "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                            "<button type='button' class='btn btn-success btnKonfirmasi'>Konfirmasi Pembelian</button>" +
+                            "<button type='button' class='btn btn-success btnKonfirmasi permintaan-tindak-lanjut'>Konfirmasi Pembelian</button>" +
                             "</div>"
                         );
                     }
                 } else {
                     return (
                         "<div class='btn-group btn-group-sm' role='group' aria-label='Small button group'>" +
-                        "<button type='button' class='btn btn-success btnProgres'>Cek Status</button>" +
+                        "<button type='button' class='btn btn-success btnProgres permintaan-tindak-lanjut'>Cek Status</button>" +
                         "</div>"
                     );
                 }
@@ -120,6 +120,21 @@ var table = $("#tabel-main").DataTable({
             className: "text-center",
         },
     ],
+    drawCallback: function () {
+        // $(".permintaan-tindak-lanjut").css({
+        //     display: "none",
+        //     visibility: "hidden",
+        // });
+        $(".permintaan-tindak-lanjut").hide()
+
+        let menus = JSON.parse(localStorage.getItem("menus"));
+        menus.forEach((elem) => {
+            $("." + elem.name).show();
+        });
+    },
+});
+$("#tabel-main").on("click", ".lakukanCek", function (e) {
+    window.location.href = APP_URL + "/jenis-barang";
 });
 $("#tabel-main").on("click", ".btnBeliInventaris", function (e) {
     e.preventDefault();
@@ -464,6 +479,7 @@ $("#tabel-main").on("click", ".btnProgres", function () {
     data = table.rows($(this).closest("tr").index()).data()[0];
     id = data.id;
     console.log(id);
+    $("#id_inventarisStatus").val(data.id_inventaris).trigger("change");
     $("#id_status_deskripsi").val(data.id_status_deskripsi).trigger("change");
     $("#id_status_qc").val(data.id_status_qc).trigger("change");
     $("#id_status_penyelesaian")
@@ -483,6 +499,9 @@ $("#id_status").select2({
     width: "100%",
 });
 $("#no_inventaris").select2({
+    width: "100%",
+});
+$("#id_inventarisStatus").select2({
     width: "100%",
 });
 $("#status_pembayaran").select2({

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -61,5 +62,20 @@ class UserRoleController extends Controller
         $user->assignRole($request->input('roles'));
 
         return response()->json(['success' => 'Data berhasil Diubah']);
+    }
+    public function destroy($id){
+        $user = User::where('id',$id)->delete();
+        return "Berhasil Dihapus";
+    }
+
+    public function me()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json("unauthorized");
+        }
+        $user_id = $user->id;
+        $userRole = User::where('id', $user_id)->with('roles.permissions')->first();
+        return response()->json(['role' => $userRole]);
     }
 }

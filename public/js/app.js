@@ -8,6 +8,53 @@ $(".btnPermintaan").on("click", function () {
     // alert("test")
     window.location.replace(APP_URL + "/permintaan");
 });
+
+$.ajax({
+    url: APP_URL + "/me",
+    type: "get",
+    // headers: {
+    //     Authorization: "Bearer " + localStorage.getItem("api_token"),
+    // },
+
+    success: function (response) {
+        var roles = response.role.roles[0]?.name;
+        var permissions = response.role.roles[0]?.permissions;
+        localStorage.removeItem("menus");
+        localStorage.setItem("menus", JSON.stringify(permissions));
+        // console.log(localStorage.setItem("menus", JSON.stringify(permissions)));
+        // logika untuk menampilkan atau menyembunyikan menu berdasarkan roles dan permissions
+
+        permissions.forEach(function (permission) {
+            permissions.forEach((elem) => {
+                $("." + elem.name).show();
+            });
+
+            switch (permission.name) {
+                case "menu-inspeksi-request":
+                    $("#menu-inspeksi-request").show();
+                    break;
+                case "menu-rekomendasi-teknik":
+                    $("#menu-rekomendasi-teknik").show();
+                    break;
+                case "menu-digital-docs":
+                    $("#menu-digital-docs").show();
+                    break;
+                case "menu-rbi":
+                    $("#menu-rbi").show();
+                    break;
+                case "menu-app":
+                    $("#menu-app").show();
+                    break;
+                case "menu-master-data":
+                    $("#menu-master-data").show();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+    },
+});
 // $("#linkAduan").on("click", function () {
 //     // alert("test")
 //     window.location.replace(APP_URL + "/aduan/view");

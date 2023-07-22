@@ -44,8 +44,8 @@
                             <div class="container px-5">
                                 <div class="row gx-5 justify-content-center">
                                     <div class="col-xl-8 col-lg-10 text-center mb-4" data-aos="fade">
-                                        <h1 class="page-header-ui-title">Layanan Aduan IT</h1>
-                                        <p class="page-header-ui-text">Dapatkan bantuan dan dukungan teknis untuk masalah IT Anda dengan layanan aduan IT kami. Tim ahli kami siap membantu Anda dalam mengatasi permasalahan komputer, perangkat lunak, jaringan, dan lainnya. Kami menyediakan solusi yang mudah digunakan dan efektif untuk memastikan kelancaran operasional sistem Anda.</p>
+                                        <h1 class="page-header-ui-title">Layanan Permintaan IT</h1>
+                                        <p class="page-header-ui-text">Dapatkan bantuan dan dukungan teknis untuk masalah IT Anda dengan layanan permintaan perangkat kami. Tim ahli kami siap membantu Anda dalam mengatasi permasalahan komputer, perangkat lunak, jaringan, dan lainnya. Kami menyediakan solusi yang mudah digunakan dan efektif untuk memastikan kelancaran operasional sistem Anda.</p>
                                         <a class="btn btn-primary fw-500 me-2" href="{{ route('viewPermintaan') }}">Mulai</a>
                                         {{-- <a class="btn btn-link fw-500" href="#!">Pelajari Lebih Lanjut</a> --}}
                                     </div>
@@ -61,21 +61,22 @@
                                 <div class="col-lg-4 mb-5 mb-lg-0">
                                     <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i data-feather="layers"></i></div>
                                     <h3>Dirancang untuk pengembang</h3>
-                                    <p class="mb-0">Sistem pembangunan berbasis blok yang dapat disesuaikan kami membuat pembuatan proyek berikutnya Anda cepat dan mudah!</p>
+                                    <p class="mb-0">Fungsi Layanan Permintaan Perangkat IT berbasis blok yang dapat disesuaikan kami membuat pembuatan proyek berikutnya Anda cepat dan mudah!</p>
                                 </div>
                                 <div class="col-lg-4 mb-5 mb-lg-0">
                                     <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i data-feather="smartphone"></i></div>
                                     <h3>Desain responsif modern</h3>
-                                    <p class="mb-0">Menampilkan komponen yang dibuat dengan cermat berbasis perangkat mobile-first, produk akhir Anda akan berfungsi dengan indah pada semua perangkat!</p>
+                                    <p class="mb-0">Menampilkan komponen yang dibuat dengan cermat berbasis perangkat mobile-first, fungsi layanan produk akhir Anda akan berfungsi dengan indah pada semua perangkat!</p>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i data-feather="code"></i></div>
                                     <h3>Dokumentasi lengkap</h3>
-                                    <p class="mb-0">Semua tata letak, bagian halaman, komponen, dan utilitas sepenuhnya tercakup dalam dokumen produk ini.</p>
+                                    <p class="mb-0">Semua tata letak, bagian halaman, komponen, dan utilitas sepenuhnya tercakup dalam dokumen fungsi layanan produk ini.</p>
                                 </div>
                             </div>
                         </div>
                     </section>
+                    
                     
                     <section class="bg-light py-10">
                         <div class="container px-5">
@@ -147,7 +148,7 @@
                     </section>
                     
                     
-                    <section class="bg-light pt-10">
+                    {{-- <section class="bg-light pt-10">
                         <div class="container px-5">
                             <div class="text-center mb-5">
                                 <h2>Simple Pricing</h2>
@@ -258,7 +259,7 @@
                             <!-- Rounded SVG Border-->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
                         </div>
-                    </section>
+                    </section> --}}
                   
                     <section class="bg-img-cover overlay overlay-primary overlay-80 pt-15" style="background-image: url('https://source.unsplash.com/e3OUQGT9bWU/1400x900')">
                         <!-- Spacer for the image section-->

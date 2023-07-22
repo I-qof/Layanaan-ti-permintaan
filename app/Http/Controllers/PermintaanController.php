@@ -23,11 +23,28 @@ class PermintaanController extends Controller
 {
    public function index()
    {
-      $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
-         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
-         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
-         ->where('permintaan.deleted', 1)->orderBy('permintaan.id', 'DESC')->get();
+      if (Auth::user()->hasRole('staff')) {
+         $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
+            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+            ->where(['permintaan.deleted' => 1, 'permintaan.id_user' => Auth::user()->id])->orderBy('permintaan.id', 'DESC')->get();
+      } else {
+
+         $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
+            ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+            ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+            ->where('permintaan.deleted', 1)->orderBy('permintaan.id', 'DESC')->get();
+      }
       return DataTables::of($data)->make(true);
+   }
+
+   public function search($no_aduan)
+   {
+      $data = Permintaan::where('no_aduan', 'like', "%{$no_aduan}%")->first();
+      if ($data == null) {
+         abort(404, 'data tidak ditemukan');
+      }
+      return response()->json($data);
    }
 
    public function view()
@@ -47,6 +64,31 @@ class PermintaanController extends Controller
          'no_aduan' => $random,
          'jenis' => $jenis,
       ]);
+   }
+   public function print($no_aduan)
+   {
+      $data = Permintaan::where('no_aduan', 'like', "%{$no_aduan}%")->first();
+
+      $count = DescPermintaan::leftJoin('status', 'desc_aduan.id_status', '=', 'status.id')
+         ->where('desc_aduan.deleted', 1)
+         ->where('desc_aduan.no_aduan', $data->no_aduan)
+         ->count();
+
+      $desc = DescPermintaan::select('desc_aduan.*', 'status.nama_status', 'status.color', 'users.name as name', 'inventaris.no_inventaris')
+         ->leftJoin('inventaris', 'desc_aduan.id_inventaris', '=', 'inventaris.id')
+         ->leftJoin('status', 'desc_aduan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'desc_aduan.id_teknisi', '=', 'users.id')
+         ->where('desc_aduan.deleted', 1)
+         ->where('desc_aduan.no_aduan', $no_aduan)
+         ->orderByDesc('desc_aduan.id') // Mengurutkan berdasarkan id secara descending
+         ->get();
+      $nama = $data->id . '/' . $data->tgl_masuk . ' -Laporan-Aduan.pdf';
+
+      $detail = ['data' => $data, 'total' => $count, 'desc' => $desc];
+      $pdf = Pdf::loadview('views.pengaduan.aduan_print', $detail);
+      return $pdf->download($nama);
+      //   return view('views.pengaduan.aduan_print',$detail);
+
    }
    public function updateView($id)
    {

@@ -1,16 +1,3 @@
-// $("#roles").select2();
-let id;
-$.getJSON(APP_URL + "/role/get", function (data) {
-    data.data.forEach((item, i) => {
-        $("#roles").append(
-            $("<option>", {
-                value: item.name,
-                text: item.name,
-            })
-        );
-    });
-});
-
 var table = $("#tabel-main").DataTable({
     bLengthChange: false,
     ordering: false,
@@ -18,7 +5,7 @@ var table = $("#tabel-main").DataTable({
     serverSide: true,
     autoWidth: false,
     ajax: {
-        url: APP_URL + "/userroles/get",
+        url: APP_URL + "/inventaris/get/keluar",
         method: "GET",
     },
     columns: [
@@ -29,24 +16,26 @@ var table = $("#tabel-main").DataTable({
             },
             className: "text-center",
         },
+
         {
-            data: "name",
+            data: "nama_inventaris",
             className: "text-center",
         },
         {
-            data: "email",
+            data: "no_inventaris",
             className: "text-center",
         },
         {
-            data: "roles",
+            data: "status_pemakaian",
             className: "text-center",
-            render: function (data, type, row) {
-                var menus = data.map(function (role) {
-                    return role.name;
-                });
-                return menus.join(", ");
+            render: function (data, type, meta, row) {
+                if (data == 1) {
+                    return "<div class='badge badge-danger'>Tidak dipakai</div>";
+                }
+                return "<div class='badge badge-success'>Sedang dipakai</div>";
             },
         },
+
         {
             data: null,
             render: function (data, type, row) {
@@ -62,28 +51,35 @@ var table = $("#tabel-main").DataTable({
     ],
 });
 
-$(".cancel").on("click", function () {
-    $("#modalAdd").modal("hide");
-});
-$(".close").on("click", function () {
-    $("#modalAdd").modal("hide");
-});
+$("#id_jenis").select2();
 
-$("#openModal").on("click", function () {
-    $("#id").val(0);
-    $("#name").val("");
-    $("#email").val("");
-    $("#selLevel").val("1").trigger("change");
+$("#tabel-main").on("click", ".editData", function () {
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    id = data.id;
+    $("#nama_inventaris").val(data.nama_inventaris);
+    $("#id_jenis").val(data.id_jenis).trigger("change");
+    $("#no_inventaris").val(data.no_inventaris);
+    $("#deskripsi").val(data.deskripsi);
+
     $("#modalAdd").modal("show");
 });
 
+$("#openModal").on("click", function (e) {
+    e.preventDefault();
+    id = 0;
+    $("#formData").trigger("reset");
+    $("#id_jenis").val("").trigger("change");
+    $("#modalAdd").modal("show");
+});
+
+
 $("#formData").on("submit", function (event) {
     event.preventDefault();
-    let idku = $("#id").val();
-    if (idku == 0) {
+    console.log($("#formData").serialize());
+    if (id == 0) {
         $.ajax({
             type: "POST",
-            url: APP_URL + "/userroles/store",
+            url: APP_URL + "/inventaris/store",
             data: $("#formData").serialize(),
 
             success: function (response) {
@@ -92,22 +88,15 @@ $("#formData").on("submit", function (event) {
                 $("#modalAdd").modal("hide");
                 $.toast({
                     heading: "Info",
-                    text: "Data berhasil diubah!",
+                    text: "Data berhasil disimpan!",
                     showHideTransition: "slide",
                     icon: "info",
                     loaderBg: "#46c35f",
                     position: "top-right",
                 });
+                table.draw();
             },
             error: function (data) {
-                $.toast({
-                    heading: "Info",
-                    text: "Error!",
-                    showHideTransition: "slide",
-                    icon: "info",
-                    loaderBg: "#46c35f",
-                    position: "top-right",
-                });
                 var msg = data.responseJSON;
                 var message = "";
 
@@ -122,8 +111,8 @@ $("#formData").on("submit", function (event) {
         });
     } else {
         $.ajax({
-            type: "PATCH",
-            url: APP_URL + "/userroles/update",
+            type: "POST",
+            url: APP_URL + "/inventaris/update/" + id,
             data: $("#formData").serialize(),
 
             success: function (response) {
@@ -132,22 +121,15 @@ $("#formData").on("submit", function (event) {
                 $("#modalAdd").modal("hide");
                 $.toast({
                     heading: "Info",
-                    text: "Data berhasil diubah!",
+                    text: "Data berhasil disimpan!",
                     showHideTransition: "slide",
                     icon: "info",
                     loaderBg: "#46c35f",
                     position: "top-right",
                 });
+                table.draw();
             },
             error: function (data) {
-                $.toast({
-                    heading: "Info",
-                    text: "Error!",
-                    showHideTransition: "slide",
-                    icon: "info",
-                    loaderBg: "#46c35f",
-                    position: "top-right",
-                });
                 var msg = data.responseJSON;
                 var message = "";
 
@@ -163,17 +145,15 @@ $("#formData").on("submit", function (event) {
     }
 });
 
-$("#tabel-main").on("click", ".editData", function () {
-    data = table.rows($(this).closest("tr").index()).data()[0];
-
-    $("#id").val(data.id);
-    $("#name").val(data.name);
-    $("#email").val(data.email);
-
-    $("#modalAdd").modal("show");
+$(".cancel").on("click", function () {
+    $("#modalAdd").modal("hide");
+});
+$(".close").on("click", function () {
+    $("#modalAdd").modal("hide");
 });
 
 $("#tabel-main").on("click", ".hapusData", function () {
+    // alert("halo");
     data = table.rows($(this).closest("tr").index()).data()[0];
     swal({
         title: "Hapus Data?",
@@ -201,9 +181,10 @@ $("#tabel-main").on("click", ".hapusData", function () {
         },
     }).then(function (result) {
         if (result) {
+            // alert("hy")
             $.ajax({
                 type: "GET",
-                url: APP_URL + "/userroles/delete/"+data.id,
+                url: APP_URL + "/inventaris/delete/" + data.id,
                 success: function (response) {
                     $.toast({
                         heading: "Info",
@@ -216,14 +197,7 @@ $("#tabel-main").on("click", ".hapusData", function () {
                     table.draw();
                 },
                 error: function (data) {
-                    $.toast({
-                        heading: "Info",
-                        text: "Masih terdapat error!",
-                        showHideTransition: "slide",
-                        icon: "info",
-                        loaderBg: "#46c35f",
-                        position: "top-right",
-                    });
+                    toastr["error"]("Masih terdapat Error!", "Error");
                 },
             });
         }
