@@ -63,7 +63,7 @@
                         <hr>
                     </div>
                     <div class="container-fluid w-100">
-                        <a href="#" class="btn btn-primary float-right mt-4 ms-2 print"><i
+                        <a href="" class="btn btn-primary float-right mt-4 ms-2 btnPrint"><i
                                 class="ti-printer me-1"></i>Print</a>
                         @can('permintaan-tindak-lanjut', Permintaan::class)
                             <a class="btn btn-warning float-right mt-4 tindakLanjut"><i class="ti-export me-1"></i>Tindak Lanjut

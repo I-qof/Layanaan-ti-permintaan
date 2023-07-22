@@ -6,7 +6,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data Inventaris</h4>
+            <h4 class="card-title">Data Permintaaan Perangkat</h4>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">

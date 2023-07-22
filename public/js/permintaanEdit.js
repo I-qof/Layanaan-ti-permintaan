@@ -602,9 +602,11 @@ $("#formDataTindakLanjut").on("submit", function (e) {
     });
 });
 
-$(".print").on("click", function () {
+$(".btnPrint").on("click", function (e) {
+    e.preventDefault();
     let id = $("#no_aduan").val();
-    window.location.href = APP_URL + "/aduan/print/" + id;
+    console.log(id);
+    window.location.href = APP_URL + "/permintaan/print/" + id;
 });
 $(".btnAmbil").on("click", function () {
     let id = $("#no_aduan").val();

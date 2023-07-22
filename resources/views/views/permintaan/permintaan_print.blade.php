@@ -161,19 +161,19 @@
                                 <table id="tabel-main" class="table">
                                     <thead>
                                         <tr class="bg-dark text-white">
-                                            <th>No Inventaris</th>
-                                            <th>Kerusakan</th>
+                                            <th>Deskripsi Permintaan</th>
+                                            {{-- <th>Kerusakan</th>
                                             <th>Teknisi</th>
-                                            <th>Status</th>
+                                            <th>Status</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($desc as $desk)
                                             <tr class="">
-                                                <td style="text-align: center">{{ $desk->no_inventaris }}</td>
-                                                <td style="text-align: center">{{ $desk->name }}</td>
-                                                <td style="text-align: center">{{ $desk->kerusakan }}</td>
-                                                <td style="text-align: center">{{ $desk->nama_status }}</td>
+                                                <td style="text-align: center">{{ $desk->deskripsi }}</td>
+                                                {{-- <td style="text-align: center">{{ $desk->nama_status }}</td> --}}
+                                                {{-- <td style="text-align: center">{{ $desk->kerusakan }}</td>
+                                                <td style="text-align: center">{{ $desk->nama_status }}</td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -101,7 +101,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">DESKRIPSI ADUAN</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">DESKRIPSI PERMINTAAN</h5>
                     <button type="button" class="btn cancel" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -114,12 +114,12 @@
                             </div> --}}
                             <div class="col-md-12">
                                 <div class="card-body d-flex h-100 flex-column">
-                                    <h3 class="card-title fw-bold text-uppercase mb-2">Deskripsi Aduan</h3>
+                                    <h3 class="card-title fw-bold text-uppercase mb-2">Deskripsi Permintaan</h3>
                                     <div class="row">
                                         <div class="col-6">
-                                            <p><strong>No Aduan:</strong> <span id="no_aduan">--</span></p>
-                                            <p><strong>Email:</strong> <span id="email">--</span></p>
-                                            <p><strong>Keluhan:</strong> <span id="keluhan">--</span></p>
+                                            <p><strong>No Permintaan:</strong> <span id="no_aduan">--</span></p>
+                                            <p><strong>Nama:</strong> <span id="name">--</span></p>
+                                            <p><strong>Alasan Permintaan:</strong> <span id="alasan_permintaan">--</span></p>
                                             <p><strong>No HP:</strong> <span id="no_hp">--</span></p>
                                             <p><strong>Lokasi:</strong> <span id="lokasi">--</span></p>
                                             <p><strong>Email Atasan:</strong> <span id="email_atasan">--</span></p>
@@ -127,7 +127,7 @@
                                         <div class="col-6">
                                             <p><strong>Tanggal Masuk:</strong> <span id="tgl_masuk">--</span></p>
                                             <p><strong>Tanggal Keluar:</strong> <span id="tgl_keluar">--</span></p>
-                                            <p><strong>Nama Status:</strong> <span id="nama_status">--</span></p>
+                                            <p><strong>Nama Status:</strong> <span class="text-primary" id="nama_status">--</span></p>
                                             <p><strong>Nama Pengambil:</strong> <span id="nama_pengambil">--</span></p>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@
                                     <img class="img-fluid p-4"
                                         src="{{ URL::asset('/assetsProfil/assets/img/illustrations/404-error.svg') }}"
                                         alt="..." />
-                                    <p class="lead">Data aduan ini tidak ditemukan didalam system.</p>
+                                    <p class="lead">Data permintaan ini tidak ditemukan didalam system.</p>
                                     {{-- <a class="text-arrow-icon" href="index.html">
                                         <i class="ms-0 me-1" data-feather="arrow-left"></i>
                                         Return Home
