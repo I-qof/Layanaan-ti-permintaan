@@ -42,10 +42,10 @@ class PermintaanController extends Controller
    public function search($no_aduan)
    {
       $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
-      ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
-      ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
-      ->where('no_aduan', 'like', "%{$no_aduan}%")
-      ->first();
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where('no_aduan', 'like', "%{$no_aduan}%")
+         ->first();
       if ($data == null) {
          abort(404, 'data tidak ditemukan');
       }
@@ -126,6 +126,7 @@ class PermintaanController extends Controller
       $this->validate($request, [
          'alasan_permintaan' => 'required',
          'no_aduan' => 'required',
+         'departement' => 'required',
          'no_hp' => 'required',
          'lokasi' => 'required',
          'email_atasan' => 'required',
@@ -134,6 +135,7 @@ class PermintaanController extends Controller
       $input = [
          'id_user' => Auth::user()->id,
          'alasan_permintaan' => $request->alasan_permintaan,
+         'departement' => $request->departement,
          'no_aduan' => $request->no_aduan,
          'no_hp' => $request->no_hp,
          'tgl_masuk' => new DateTime,
@@ -176,6 +178,7 @@ class PermintaanController extends Controller
          'id_user' => 'required',
          'alasan_permintaan' => 'required',
          'no_aduan' => 'required',
+         'departement' => 'required',
          'no_hp' => 'required',
          'lokasi' => 'required',
          'email_atasan' => 'required',
@@ -185,6 +188,7 @@ class PermintaanController extends Controller
       $input = [
          'id_user' => $request->id_user,
          'alasan_permintaan' => $request->alasan_permintaan,
+         'departement' => $request->departement,
          'no_aduan' => $request->no_aduan,
          'no_hp' => $request->no_hp,
          'lokasi' => $request->lokasi,
