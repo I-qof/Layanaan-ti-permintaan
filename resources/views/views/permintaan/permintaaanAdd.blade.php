@@ -30,6 +30,34 @@
                                     <input type="text" id="lokasi" name="lokasi" required class="form-control"
                                         placeholder="Masukkan lokasi anda ">
                                 </div>
+                                <div class="form-group">
+                                    <label>Departement</label>
+                                    <select name="departement" id="departement" style="width: 100%">
+                                        <option value="">---Silahkan pilih departement---</option>
+                                        <option value="Departement Kesehatan kerja">Departement Kesehatan kerja</option>
+                                        <option value="Departement Keuangan">Departement Keuangan</option>
+                                        <option value="Departement Sumber Daya Manusia">Departement Sumber Daya Manusia
+                                        </option>
+                                        <option value="Departement Pemasaran">Departement Pemasaran</option>
+                                        <option value="Departement Penjualan">Departement Penjualan</option>
+                                        <option value="Departement Produksi">Departement Produksi</option>
+                                        <option value="Departement Teknologi Informasi (TI)">Departement Teknologi Informasi
+                                            (TI)</option>
+                                        <option value="Departemen Riset dan Pengembangan (R&D)">Departemen Riset dan
+                                            Pengembangan (R&D)</option>
+                                        <option value="Departemen Operasional">Departemen Operasional</option>
+                                        <option value="Departemen Layanan Pelanggan">Departemen Layanan Pelanggan</option>
+                                        <option value="Departemen Logistik dan Suplai">Departemen Logistik dan Suplai
+                                        </option>
+                                        <option value="Departemen Hukum dan Kepatuhan">Departemen Hukum dan Kepatuhan
+                                        </option>
+                                        <option value="Departemen Komunikasi">Departemen Komunikasi</option>
+                                        <option value="Departemen Pengembangan Bisnis">Departemen Pengembangan Bisnis
+                                        </option>
+                                        <option value="Departemen Kualitas">Departemen Kualitas</option>
+                                        <option value="Departemen Manajemen Proyek">Departemen Manajemen Proyek</option>
+                                    </select>
+                                </div>
 
                             </section>
                             <h3>Permintaan</h3>
@@ -43,8 +71,9 @@
                                     </div>
                                     <label>Alasan Permintaan</label>
 
-                                    <textarea type="text" class="form-control w-100" style="width: 100%;resize: vertical;" id="alasan_permintaan" required name="alasan_permintaan"
-                                        style="width: 100%" aria-describedby="text" placeholder="Masukkan alasan permintaan anda"></textarea>
+                                    <textarea type="text" class="form-control w-100" style="width: 100%;resize: vertical;" id="alasan_permintaan"
+                                        required name="alasan_permintaan" style="width: 100%" aria-describedby="text"
+                                        placeholder="Masukkan alasan permintaan anda"></textarea>
                                 </div>
 
                             </section>
@@ -92,7 +121,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel" aria-hidden="true">
+    <div class="modal fade" id="modalAdd" role="dialog" aria-labelledby="modalAddLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -108,7 +137,8 @@
                             <label for="exampleInputEmail1">Jenis Barang</label>
                             <input type="test" id="no_aduan" name="no_aduan" class="form-control"
                                 value="{{ $no_aduan }}" hidden required>
-                            <select name="id_jenis_barang" id="id_jenis_barang" class="js-example-basic-single w-100" required>
+                            <select name="id_jenis_barang" id="id_jenis_barang" class="js-example-basic-single w-100"
+                                required>
                                 <option value="">-- Pilih Jenis Barang</option>
                                 @foreach ($jenis as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_jenis }}</option>
@@ -119,7 +149,8 @@
                         <div class="form-group">
                             <label for="exampleInputUsername1">Deskripsi Barang dibeli</label>
                             <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" required
-                                placeholder="Harap Isikan Spesifikasi Permintaaan deskripsi" style="width: 100%;resize: vertical;" rows="4"></textarea>
+                                placeholder="Harap Isikan Spesifikasi Permintaaan deskripsi" style="width: 100%;resize: vertical;"
+                                rows="4"></textarea>
                         </div>
 
                     </div>

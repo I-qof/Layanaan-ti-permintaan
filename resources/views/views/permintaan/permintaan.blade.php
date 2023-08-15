@@ -6,7 +6,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data Permintaaan Perangkat</h4>
+            <h4 class="card-title">Data Permintaaan Perangkat Komputer</h4>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
@@ -14,7 +14,7 @@
                             <thead>
                                 <tr>
                                     <th><a href="{{ url('/permintaan/add') }}" class="btn btn-success">Tambah Data</a></th>
-                                    <th>No Aduan</th>
+                                    <th>No Permintaan</th>
                                     <th>Nama User</th>
                                     <th>Tgl. Masuk</th>
                                     <th>Tgl. Keluar</th>

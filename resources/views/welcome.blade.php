@@ -44,8 +44,8 @@
                             <div class="container px-5">
                                 <div class="row gx-5 justify-content-center">
                                     <div class="col-xl-8 col-lg-10 text-center mb-4" data-aos="fade">
-                                        <h1 class="page-header-ui-title">Layanan Permintaan IT</h1>
-                                        <p class="page-header-ui-text">Dapatkan bantuan dan dukungan teknis untuk masalah IT Anda dengan layanan permintaan perangkat kami. Tim ahli kami siap membantu Anda dalam mengatasi permasalahan komputer, perangkat lunak, jaringan, dan lainnya. Kami menyediakan solusi yang mudah digunakan dan efektif untuk memastikan kelancaran operasional sistem Anda.</p>
+                                        <h1 class="page-header-ui-title">Layanan Permintaan Perangkat Komputer</h1>
+                                        <p class="page-header-ui-text">Dapatkan bantuan dan dukungan teknis untuk masalah IT Anda dengan layanan permintaan perangkat kami. Tim ahli kami siap membantu Anda dalam melakukan permintaan perangkat komputer. Kami menyediakan solusi yang mudah digunakan dan efektif untuk memastikan kelancaran operasional sistem Anda.</p>
                                         <a class="btn btn-primary fw-500 me-2" href="{{ route('viewPermintaan') }}">Mulai</a>
                                         {{-- <a class="btn btn-link fw-500" href="#!">Pelajari Lebih Lanjut</a> --}}
                                     </div>

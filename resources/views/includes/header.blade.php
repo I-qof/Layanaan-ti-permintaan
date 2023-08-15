@@ -19,7 +19,7 @@
          <ul class="navbar-nav">
              <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
                  <h1 class="welcome-text">Halo, <span class="text-black fw-bold">{{ Auth::user()->name }}</span></h1>
-                 <h3 class="welcome-sub-text">Selamat datang kembali, mari lihat aduan kamu! </h3>
+                 <h3 class="welcome-sub-text">Selamat datang kembali, mari lihat permintaan kamu! </h3>
              </li>
          </ul>
          <ul class="navbar-nav ms-auto">

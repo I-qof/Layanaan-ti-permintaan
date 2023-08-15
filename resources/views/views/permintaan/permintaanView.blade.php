@@ -52,7 +52,7 @@
                         <div class="container px-5">
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-xl-8 col-lg-10 text-center mb-4" data-aos="fade">
-                                    <h1 class="page-header-ui-title">Layanaan Permintaan Komputer</h1>
+                                    <h1 class="page-header-ui-title">Layanaan Permintaan Perangkat Komputer</h1>
                                     <p class="page-header-ui-text">Silahkan Lakukan tracking permintaan anda</p>
                                     <div class="row justify-content-center">
                                         <div class="input-group w-75 ">

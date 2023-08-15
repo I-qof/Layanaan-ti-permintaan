@@ -130,7 +130,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="container-fluid">
-                            <h3 class="text-left my-5">No.Aduan &nbsp;&nbsp;#{{ $data->no_aduan }}</h3>
+                            <h3 class="text-left my-5">No. Permintaan &nbsp;&nbsp;#{{ $data->no_aduan }}</h3>
                             <hr>
                         </div>
                         <div class="container-fluid d-flex justify-content-between">

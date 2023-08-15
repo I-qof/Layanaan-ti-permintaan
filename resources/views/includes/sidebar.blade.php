@@ -68,7 +68,7 @@
                            @endcan
                            @can('menu-jenis-barang', Jenis_barang::class)
                                <li class="nav-item {{ Request::is(['jenis-barang/*','jenis-barang']) ? 'active' : '' }}"> <a class="nav-link"
-                                       href="{{ URL::to('/jenis-barang') }}">Jenis Barang</a>
+                                       href="{{ URL::to('/jenis-barang') }}">Data Barang</a>
                                </li>
                            @endcan
                            @can('menu-inventaris', Inventaris::class)

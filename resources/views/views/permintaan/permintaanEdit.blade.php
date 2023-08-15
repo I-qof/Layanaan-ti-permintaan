@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <input type="text" hidden id="no_aduan" name="no_aduan" value="{{ $data->no_aduan }}">
-                        <h3 class="text-right my-5">No.Aduan &nbsp;&nbsp;#{{ $data->no_aduan }}</h3>
+                        <h3 class="text-right my-5">No. Permintaan &nbsp;&nbsp;#{{ $data->no_aduan }}</h3>
                         <hr>
                     </div>
                     <div class="container-fluid d-flex justify-content-between">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="container-fluid d-flex justify-content-between">
                         <div class="col-lg-3 pr-0">
-                            <p class="mt-5 mb-2 text-right"><b>Deskripsi Aduan</b></p>
+                            <p class="mt-5 mb-2 text-right"><b>Deskripsi Permintaan</b></p>
                             <p>Email Atasan : {{ $data->email_atasan }}</p>
                             <p>Status : {{ $data->nama_status }}</p>
                             <p>Status Approve : {{ $data->approve_status == 2 ? 'APPROVED' : 'OPEN' }}</p>

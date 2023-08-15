@@ -22,8 +22,10 @@
                         position: "top-right",
                     });
                     $("#example-form").trigger("reset");
-                    setTimeout(window.location.href = APP_URL + "/permintaan",10000)
-                    
+                    setTimeout(
+                        (window.location.href = APP_URL + "/permintaan"),
+                        10000
+                    );
                 },
                 error: function (data) {
                     $.toast({
@@ -102,149 +104,147 @@ $("#openModal").on("click", function (e) {
 $(".cancel").on("click", function () {
     $("#modalAdd").modal("hide");
     $("#formData").trigger("reset");
-
 });
 $(".close").on("click", function () {
     $("#modalAdd").modal("hide");
     $("#formData").trigger("reset");
-
 });
 
 $("#formData").on("submit", function (event) {
     event.preventDefault();
     if (id == 0) {
-    $.ajax({
-        type: "POST",
-        url: APP_URL + "/desc-permintaan/store",
-        data: $("#formData").serialize(),
+        $.ajax({
+            type: "POST",
+            url: APP_URL + "/desc-permintaan/store",
+            data: $("#formData").serialize(),
 
-        success: function (response) {
-            table.draw(false);
+            success: function (response) {
+                table.draw(false);
 
-            $("#modalAdd").modal("hide");
-            $.toast({
-                heading: "Info",
-                text: "Data berhasil disimpan!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-            table.draw();
-        },
-        error: function (data) {
-            $.toast({
-                heading: "Info",
-                text: "Error!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-            var msg = data.responseJSON;
-            var message = "";
-
-            $.each(msg, function (key, valueObj) {
-                valueObj.forEach((item, i) => {
-                    message += ". " + item + "<br>";
+                $("#modalAdd").modal("hide");
+                $.toast({
+                    heading: "Info",
+                    text: "Data berhasil disimpan!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
                 });
-            });
-
-            toastr["error"](message, "Error");
-        },
-    });}else{
-      $.ajax({
-        type: "POST",
-        url: APP_URL + "/desc-permintaan/update/" + id,
-        data: $("#formData").serialize(),
-
-        success: function (response) {
-            table.draw(false);
-
-            $("#modalAdd").modal("hide");
-            $.toast({
-                heading: "Info",
-                text: "Data berhasil disimpan!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-            table.draw();
-        },
-        error: function (data) {
-            $.toast({
-                heading: "Info",
-                text: "Error!",
-                showHideTransition: "slide",
-                icon: "info",
-                loaderBg: "#46c35f",
-                position: "top-right",
-            });
-            var msg = data.responseJSON;
-            var message = "";
-
-            $.each(msg, function (key, valueObj) {
-                valueObj.forEach((item, i) => {
-                    message += ". " + item + "<br>";
+                table.draw();
+            },
+            error: function (data) {
+                $.toast({
+                    heading: "Info",
+                    text: "Error!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
                 });
-            });
+                var msg = data.responseJSON;
+                var message = "";
 
-            toastr["error"](message, "Error");
-        },
-    });
+                $.each(msg, function (key, valueObj) {
+                    valueObj.forEach((item, i) => {
+                        message += ". " + item + "<br>";
+                    });
+                });
+
+                toastr["error"](message, "Error");
+            },
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: APP_URL + "/desc-permintaan/update/" + id,
+            data: $("#formData").serialize(),
+
+            success: function (response) {
+                table.draw(false);
+
+                $("#modalAdd").modal("hide");
+                $.toast({
+                    heading: "Info",
+                    text: "Data berhasil disimpan!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
+                });
+                table.draw();
+            },
+            error: function (data) {
+                $.toast({
+                    heading: "Info",
+                    text: "Error!",
+                    showHideTransition: "slide",
+                    icon: "info",
+                    loaderBg: "#46c35f",
+                    position: "top-right",
+                });
+                var msg = data.responseJSON;
+                var message = "";
+
+                $.each(msg, function (key, valueObj) {
+                    valueObj.forEach((item, i) => {
+                        message += ". " + item + "<br>";
+                    });
+                });
+
+                toastr["error"](message, "Error");
+            },
+        });
     }
 });
 $("#tabel-main").on("click", ".hapusData", function () {
-  data = table.rows($(this).closest('tr').index()).data()[0];
-      swal({
-        title: 'Hapus Data Ini?',
+    data = table.rows($(this).closest("tr").index()).data()[0];
+    swal({
+        title: "Hapus Data Ini?",
         text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3f51b5',
-        cancelButtonColor: '#ff4081',
-        confirmButtonText: 'Great ',
+        confirmButtonColor: "#3f51b5",
+        cancelButtonColor: "#ff4081",
+        confirmButtonText: "Great ",
         buttons: {
-          cancel: {
-            text: "Cancel",
-            value: null,
-            visible: true,
-            className: "btn btn-danger",
-            closeModal: true,
-          },
-          confirm: {
-            text: "OK",
-            value: true,
-            visible: true,
-            className: "btn btn-primary",
-            closeModal: true
-          }
-        }
-      }).then(function(result){
-        if(result){
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        },
+    }).then(function (result) {
+        if (result) {
             // alert("hy")
             $.ajax({
-                type : 'GET',
-                url  : APP_URL + '/desc-permintaan/delete/' + data.id,
-                success :  function(response){
+                type: "GET",
+                url: APP_URL + "/desc-permintaan/delete/" + data.id,
+                success: function (response) {
                     $.toast({
-                        heading: 'Info',
-                        text: 'Data berhasil dihapus!',
-                        showHideTransition: 'slide',
-                        icon: 'info',
-                        loaderBg: '#46c35f',
-                        position: 'top-right'
-                      })
+                        heading: "Info",
+                        text: "Data berhasil dihapus!",
+                        showHideTransition: "slide",
+                        icon: "info",
+                        loaderBg: "#46c35f",
+                        position: "top-right",
+                    });
                     table.draw();
                 },
-                error: function(data){
+                error: function (data) {
                     toastr["error"]("Masih terdapat Error!", "Error");
-                }
+                },
             });
-          }
-      })
-  
+        }
+    });
 });
 $("#tabel-main").on("click", ".editData", function () {
     data = table.rows($(this).closest("tr").index()).data()[0];
@@ -254,6 +254,9 @@ $("#tabel-main").on("click", ".editData", function () {
     $("#modalAdd").modal("show");
 });
 $("#id_jenis_barang").select2({
+    width: "100%",
+});
+$("#departement").select2({
     width: "100%",
 });
 
