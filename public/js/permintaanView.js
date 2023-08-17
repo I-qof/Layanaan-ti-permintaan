@@ -15,6 +15,7 @@ $("#cari").on("click", function () {
                 $("#tgl_keluar").html(response.tgl_keluar);
                 $("#nama_status").html(response.nama_status);
                 $("#nama_pengambil").html(response.nama_pengambil);
+                $("#departement").html(response.departement);
                 $("#name").html(response.name);
 
                 $("#modalHasil").modal("show");

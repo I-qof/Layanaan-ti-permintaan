@@ -83,7 +83,7 @@
         <div id="layoutDefault_footer">
             <footer class="footer pt-5 pb-5 mt-auto bg-dark footer-dark">
                 <div class="container">
-                    
+
                     <div class="row  align-items-center">
                         <div class="col-md-6 small">Copyright © 2023, Layanaan-TI. All rights reserved.</div>
                         <div class="col-md-6 text-md-end small">
@@ -97,7 +97,8 @@
         </div>
     </div>
     {{-- modal --}}
-    <div class="modal fade" id="modalHasil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalHasil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -119,15 +120,18 @@
                                         <div class="col-6">
                                             <p><strong>No Permintaan:</strong> <span id="no_aduan">--</span></p>
                                             <p><strong>Nama:</strong> <span id="name">--</span></p>
-                                            <p><strong>Alasan Permintaan:</strong> <span id="alasan_permintaan">--</span></p>
+                                            <p><strong>Alasan Permintaan:</strong> <span
+                                                    id="alasan_permintaan">--</span></p>
                                             <p><strong>No HP:</strong> <span id="no_hp">--</span></p>
                                             <p><strong>Lokasi:</strong> <span id="lokasi">--</span></p>
                                             <p><strong>Email Atasan:</strong> <span id="email_atasan">--</span></p>
                                         </div>
                                         <div class="col-6">
+                                            <p><strong>Departement:</strong> <span id="departement">--</span></p>
                                             <p><strong>Tanggal Masuk:</strong> <span id="tgl_masuk">--</span></p>
                                             <p><strong>Tanggal Keluar:</strong> <span id="tgl_keluar">--</span></p>
-                                            <p><strong>Nama Status:</strong> <span class="text-primary" id="nama_status">--</span></p>
+                                            <p><strong>Nama Status:</strong> <span class="text-primary"
+                                                    id="nama_status">--</span></p>
                                             <p><strong>Nama Pengambil:</strong> <span id="nama_pengambil">--</span></p>
                                         </div>
                                     </div>
@@ -143,7 +147,7 @@
             </div>
         </div>
     </div>
-    
+
     </div>
     <div class="modal fade" id="modalHasilFailed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

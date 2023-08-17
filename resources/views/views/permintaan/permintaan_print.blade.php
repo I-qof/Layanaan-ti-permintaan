@@ -143,6 +143,7 @@
                             </div>
                             <div class="col-lg-12" style="padding-left: 15px">
                                 <p class="mt-5"><b>Deskripsi Tanggal</b></p>
+                                <p>Departement : {{ $data->departement }}</p>
                                 <p>Tanggal Masuk : {{ $data->tgl_masuk }}</p>
                                 <p>Tanggal Keluar : {{ $data->tgl_keluar }}</p>
                                 <p>Nama pengambil : {{ $data->nama_pengambil }}</p>
