@@ -36,7 +36,7 @@
                             <p>Email Atasan : {{ $data->email_atasan }}</p>
                             <p>Status : {{ $data->nama_status }}</p>
                             <p>Status Approve : {{ $data->approve_status == 2 ? 'APPROVED' : 'OPEN' }}</p>
-                            <p>Keluhan : {{ $data->keluhan }}</p>
+                            <p>{{ $data->keluhan }}</p>
                         </div>
                     </div>
                     <div class="container-fluid mt-5 d-flex justify-content-center w-100">

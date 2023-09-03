@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
+use function Yajra\DataTables\Services\response;
+
 class PermintaanController extends Controller
 {
    public function index()
@@ -36,6 +38,23 @@ class PermintaanController extends Controller
             ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
             ->where('permintaan.deleted', 1)->orderBy('permintaan.id', 'DESC')->get();
       }
+      return DataTables::of($data)->make(true);
+   }
+
+   public function approvedView()
+   {
+      return view('views.permintaan.permintaanApprove');
+   }
+
+   public function approvedIndex()
+   {
+      $user = Auth::user()->email;
+      // $data = Permintaan::where('email_atasan', $user)->get();
+      $data = Permintaan::select('permintaan.*', 'users.name as name', 'status.nama_status')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where(['permintaan.deleted' => 1, 'email_atasan' => $user])->orderBy('permintaan.id', 'DESC')->get();
+
       return DataTables::of($data)->make(true);
    }
 
@@ -72,7 +91,11 @@ class PermintaanController extends Controller
    }
    public function print($no_aduan)
    {
-      $data = Permintaan::where('no_aduan', 'like', "%{$no_aduan}%")->first();
+      $data = Permintaan::select('permintaan.*', 'users.*', 'status.*')
+         ->leftJoin('status', 'permintaan.id_status', '=', 'status.id')
+         ->leftJoin('users', 'permintaan.id_user', '=', 'users.id')
+         ->where('no_aduan', 'like', "%{$no_aduan}%")
+         ->first();
 
       $count = DescPermintaan::leftJoin('status', 'desc_permintaan.id_status', '=', 'status.id')
          ->where('desc_permintaan.deleted', 1)
@@ -221,7 +244,6 @@ class PermintaanController extends Controller
    }
    public function sendMailApprove($email, $data)
    {
-      // dd($data);
       $mailData = [
          'alasan_permintaan' => $data->alasan_permintaan,
          'no_aduan' => $data->no_aduan,
@@ -239,6 +261,7 @@ class PermintaanController extends Controller
       try {
          $data = Permintaan::where('no_aduan', $no_aduan)->first();
          $data->update(['approve_status' => 2]);
+         return response()->json(['data' => $data]);
       } catch (\Throwable $th) {
          dd($th);
       }
@@ -258,7 +281,6 @@ class PermintaanController extends Controller
    }
    public function sendMailCostum($email, $data, $content)
    {
-      // dd($data);
 
       $mailData = [
          'alasan_permintaan' => $data->alasan_permintaan,

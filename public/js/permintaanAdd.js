@@ -280,7 +280,7 @@ var table = $("#tabel-main").DataTable({
         },
 
         {
-            data: "id_jenis_barang",
+            data: "nama_jenis",
             className: "text-center",
         },
         {

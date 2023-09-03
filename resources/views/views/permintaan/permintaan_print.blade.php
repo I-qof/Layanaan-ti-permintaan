@@ -151,10 +151,10 @@
                         </div>
                         <div class="container-fluid">
                             <div class="col-lg-12" style="padding-left: 15px">
-                                <p class="mt-5 mb-2 text-right"><b>Deskripsi Aduan</b></p>
+                                <p class="mt-5 mb-2 text-right"><b>Deskripsi Permintaan</b></p>
                                 <p>Email Atasan : {{ $data->email_atasan }}</p>
                                 <p>Status : {{ $data->nama_status }}</p>
-                                <p>Keluhan : {{ $data->keluhan }}</p>
+                                <p> {{ $data->keluhan }}</p>
                             </div>
                         </div>
                         <div class="container-fluid mt-5">

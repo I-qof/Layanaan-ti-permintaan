@@ -44,9 +44,9 @@ Auth::routes();
 Route::get('/dashboard', function () {
     return view('views.dashboard');
 });
-Route::get('/me',[UserRoleController::class,'me']);
-Route::get('/permintaan/search/{no_aduan}',[PermintaanController::class,'search']);
-Route::get('/permintaan/print/{no_aduan}',[PermintaanController::class,'print']);
+Route::get('/me', [UserRoleController::class, 'me']);
+Route::get('/permintaan/search/{no_aduan}', [PermintaanController::class, 'search']);
+Route::get('/permintaan/print/{no_aduan}', [PermintaanController::class, 'print']);
 // Route::get('/aduan/search/{no_aduan}',[AduanController::class,'search']);
 // Route::get('/aduan/print/{no_aduan}',[AduanController::class,'print']);
 
@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/permintaan', [PermintaanController::class, 'view'])->name('permintaan');
     // Route::get('/aduan/report', [AduanController::class, 'view']);
     Route::get('/permintaan/report', [PermintaanController::class, 'view']);
+    Route::get('/permintaan/approvedView', [PermintaanController::class, 'approvedview']);
+    Route::get('/permintaan/approvedIndex', [PermintaanController::class, 'approvedIndex']);
 
     Route::get('/status', [StatusController::class, 'view'])->name('status');
     Route::get('/departement', [DepartementController::class, 'view'])->name('departement');

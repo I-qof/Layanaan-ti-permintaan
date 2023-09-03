@@ -31,18 +31,18 @@
                                         placeholder="Masukkan lokasi anda ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Departement</label>
+                                    <label>Departemen</label>
                                     <select name="departement" id="departement" style="width: 100%">
-                                        <option value="">---Silahkan pilih departement---</option>
-                                        <option value="Departement Kesehatan kerja">Departement Kesehatan kerja</option>
-                                        <option value="Departement Keuangan">Departement Keuangan</option>
-                                        <option value="Departement Sumber Daya Manusia">Departement Sumber Daya Manusia
+                                        <option value="">---Silahkan pilih departemen---</option>
+                                        <option value="Departemen K3">Departemen K3</option>
+                                        <option value="Departemen Keuangan">Departemen Keuangan</option>
+                                        <option value="Departemen Pengawasan Keuangan">Departemen Pengawasan Keuangan</option>
+                                        <option value="Departemen Pembelajaran & Pengembangan SDM">Departemen Pembelajaran & Pengembangan SDM
                                         </option>
-                                        <option value="Departement Pemasaran">Departement Pemasaran</option>
-                                        <option value="Departement Penjualan">Departement Penjualan</option>
-                                        <option value="Departement Produksi">Departement Produksi</option>
-                                        <option value="Departement Teknologi Informasi (TI)">Departement Teknologi Informasi
-                                            (TI)</option>
+                                        <option value="Departemen Pemasaran">Departemen Pemasaran</option>
+                                        <option value="Departemen Penjualan Wilayah 2">Departemen Penjualan Wilayah 2</option>
+                                        <option value="Departemen Penjualan Wilayah 3B">Departemen Penjualan Wilayah 3B</option>
+                                        <option value="Departemen Produksi">Departemen Produksi</option>
                                         <option value="Departemen Riset dan Pengembangan (R&D)">Departemen Riset dan
                                             Pengembangan (R&D)</option>
                                         <option value="Departemen Operasional">Departemen Operasional</option>
@@ -51,11 +51,28 @@
                                         </option>
                                         <option value="Departemen Hukum dan Kepatuhan">Departemen Hukum dan Kepatuhan
                                         </option>
-                                        <option value="Departemen Komunikasi">Departemen Komunikasi</option>
+                                        <option value="Departemen Kom. Pemasaran & Branding">Departemen Kom. Pemasaran & Branding</option>
                                         <option value="Departemen Pengembangan Bisnis">Departemen Pengembangan Bisnis
                                         </option>
                                         <option value="Departemen Kualitas">Departemen Kualitas</option>
                                         <option value="Departemen Manajemen Proyek">Departemen Manajemen Proyek</option>
+                                        <option value="Departemen Pengawasan Operasional">Departemen Pengawasan Operasional</option>
+                                        <option value="Departemen Hubungan Kemasyarakatan">Departemen Hubungan Kemasyarakatan</option>
+                                        <option value="Departemen Sisman Terpadu & Inovasi">Departemen Sisman Terpadu & Inovasi</option>
+                                        <option value="Departemen Tata Kelola & Manajemen Resiko">Departemen Tata Kelola & Manajemen Resiko </option>
+                                        <option value="Departemen Mitra Bisnis & Layanan TI">Departemen Mitra Bisnis & Layanan TI</option>
+                                        <option value="Departemen Penjamin Kualitas">Departemen Penjamin Kualitas</option>
+                                        <option value="Departemen Laboratorium">Departemen Laboratorium</option>
+                                        <option value="Departemen Lingkungan Hidup">Departemen Lingkungan Hidup</option>
+                                        <option value="Departemen Sarana & Umum">Departemen Sarana & Umum</option>
+                                        <option value="Departemen Security">Departemen Security</option>
+                                        <option value="Departemen Akuntansi">Departemen Akuntansi</option>
+                                        <option value="Departemen Mitra Bisnis Pemasaran">Departemen Mitra Bisnis Pemasaran</option>
+                                        <option value="Departemen Pemasaran Aset">Departemen Pemasaran Aset</option>
+                                        <option value="Departemen Adm. Umum Aset">Departemen Adm. Umum Aset</option>
+                                        <option value="Departemen Perencanaan & Pengendalian Aset">Departemen Perencanaan & Pengendalian Aset</option>
+                                        <option value="Departemen Organisasi & Manajemen Talenta">Departemen Organisasi & Manajemen Talenta</option>
+                                        <option value="Departemen Remunerasi & Hub. Industrial">Departemen Remunerasi & Hub. Industrial</option>
                                     </select>
                                 </div>
 
@@ -77,9 +94,9 @@
                                 </div>
 
                             </section>
-                            <h3>Pekerjaan</h3>
+                            <h3>Detail Permintaan</h3>
                             <section>
-                                <h3>Pekerjaan</h3>
+                                <h3>Detail Permintaan</h3>
 
                                 <div class="row">
                                     <div class="col-12">
@@ -90,7 +107,7 @@
                                                         <th><button class="btn btn-outline-success" id="openModal">Tambah
                                                                 Data</button>
                                                         </th>
-                                                        <th>No Inventaris</th>
+                                                        <th>Jenis Permintaan</th>
                                                         <th>Deskripsi</th>
                                                         <th>Actions</th>
                                                     </tr>
@@ -147,7 +164,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Deskripsi Barang dibeli</label>
+                            <label for="exampleInputUsername1">Deskripsi Barang</label>
                             <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" required
                                 placeholder="Harap Isikan Spesifikasi Permintaaan deskripsi" style="width: 100%;resize: vertical;"
                                 rows="4"></textarea>
